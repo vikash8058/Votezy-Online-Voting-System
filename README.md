@@ -6,15 +6,15 @@ Built with Spring Boot (Backend), React (Frontend), and MySQL (Database), Votezy
 
 Key Features:
 
-User authentication and role-based access (Voter, Candidate, Admin)
-
-Secure voting process with one vote per user
-
-Real-time result generation
-
-Easy-to-use, accessible interface
-
-Transparent and tamper-resistant system
+    i) User authentication and role-based access (Voter, Candidate, Admin)
+    
+    ii) Secure voting process with one vote per user
+    
+    iii) Real-time result generation
+    
+    iv) Easy-to-use, accessible interface
+    
+    v) Transparent and tamper-resistant system
 
 Objective:
 To provide a modern, secure, and accessible digital voting platform that enhances voter participation and strengthens trust in electoral processes.
