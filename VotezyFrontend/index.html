@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votezy UI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- News Ticker Bar -->
+    <div class="news-ticker-bar">
+        <div class="news-ticker-track" id="news-ticker-track"></div>
+    </div>
+
+    <!-- Welcome Banner with Indian Flag will be moved below header -->
+    <script>
+    // 50 facts in Hindi and English
+    const newsFacts = [
+        "India is the world's largest democracy.",
+        "भारत दुनिया का सबसे बड़ा लोकतंत्र है।",
+        "Over 900 million people are eligible to vote in India.",
+        "भारत में 90 करोड़ से अधिक लोग मतदान के पात्र हैं।",
+        "Electronic Voting Machines (EVMs) are used in Indian elections.",
+        "भारतीय चुनावों में इलेक्ट्रॉनिक वोटिंग मशीन (EVM) का उपयोग होता है।",
+        "The first general elections in India were held in 1951-52.",
+        "भारत में पहली आम चुनाव 1951-52 में हुए थे।",
+        "Voter turnout in 2019 Lok Sabha elections was 67.4%.",
+        "2019 लोकसभा चुनाव में 67.4% मतदान हुआ था।",
+        "NOTA (None of the Above) option is available to Indian voters.",
+        "भारतीय मतदाताओं के लिए नोटा (इनमें से कोई नहीं) विकल्प उपलब्ध है।",
+        "Women participation in Indian elections is increasing every year.",
+        "भारतीय चुनावों में महिलाओं की भागीदारी हर साल बढ़ रही है।",
+        "The Election Commission of India was established in 1950.",
+        "भारत का चुनाव आयोग 1950 में स्थापित हुआ था।",
+        "India has over 1 million polling stations.",
+        "भारत में 10 लाख से अधिक मतदान केंद्र हैं।",
+        "Postal ballots are available for service voters in India.",
+        "भारत में सेवा मतदाताओं के लिए डाक मतपत्र उपलब्ध हैं।",
+        "Voter ID card is mandatory for voting in India.",
+        "भारत में मतदान के लिए वोटर आईडी कार्ड अनिवार्य है।",
+        "The Model Code of Conduct is enforced during elections.",
+        "चुनाव के दौरान आचार संहिता लागू होती है।",
+        "The symbol of the Election Commission is two hands joined together.",
+        "चुनाव आयोग का प्रतीक दो जुड़े हुए हाथ हैं।",
+        "The minimum age to vote in India is 18 years.",
+        "भारत में मतदान की न्यूनतम आयु 18 वर्ष है।",
+        "VVPAT machines provide a paper trail for EVM votes.",
+        "VVPAT मशीनें EVM वोट के लिए पेपर ट्रेल देती हैं।",
+        "India conducts elections in multiple phases.",
+        "भारत में चुनाव कई चरणों में होते हैं।",
+        "The Chief Election Commissioner is appointed by the President of India.",
+        "मुख्य चुनाव आयुक्त की नियुक्ति भारत के राष्ट्रपति करते हैं।",
+        "Polling booths are set up even in remote areas.",
+        "दूरदराज के क्षेत्रों में भी मतदान केंद्र बनाए जाते हैं।",
+        "Election ink is applied to prevent double voting.",
+        "दोहरी वोटिंग रोकने के लिए चुनावी स्याही लगाई जाती है।",
+        "India has reserved seats for women in Panchayat elections.",
+        "पंचायत चुनावों में महिलाओं के लिए आरक्षित सीटें हैं।",
+        "The world's highest polling station is in Himachal Pradesh.",
+        "दुनिया का सबसे ऊँचा मतदान केंद्र हिमाचल प्रदेश में है।",
+        "Mobile polling stations are used in some areas.",
+        "कुछ क्षेत्रों में मोबाइल मतदान केंद्रों का उपयोग होता है।",
+        "Election results are announced by the Election Commission.",
+        "चुनाव परिणाम चुनाव आयोग द्वारा घोषित किए जाते हैं।",
+        "Voters can check their names in the electoral roll online.",
+        "मतदाता अपनी नामावली ऑनलाइन देख सकते हैं।",
+        "Special arrangements are made for differently-abled voters.",
+        "विकलांग मतदाताओं के लिए विशेष व्यवस्था की जाती है।",
+        "Polling is usually held from 7 AM to 6 PM.",
+        "मतदान आमतौर पर सुबह 7 बजे से शाम 6 बजे तक होता है।",
+        "Counting of votes is done electronically.",
+        "मतों की गिनती इलेक्ट्रॉनिक रूप से होती है।",
+        "Election symbols help illiterate voters identify parties.",
+        "चुनाव चिन्ह अशिक्षित मतदाताओं के लिए सहायक होते हैं।",
+        "India celebrates National Voters' Day on 25th January.",
+        "भारत 25 जनवरी को राष्ट्रीय मतदाता दिवस मनाता है।",
+        "There are over 2,300 registered political parties in India.",
+        "भारत में 2,300 से अधिक पंजीकृत राजनीतिक दल हैं।",
+        "The world's largest single-day election was held in India.",
+        "दुनिया का सबसे बड़ा एकदिवसीय चुनाव भारत में हुआ था।",
+        "Election staff walk miles to reach remote polling stations.",
+        "चुनाव कर्मचारी दूरदराज के मतदान केंद्रों तक मीलों चलते हैं।",
+        "Voters can use the cVIGIL app to report violations.",
+        "मतदाता cVIGIL ऐप से उल्लंघन की रिपोर्ट कर सकते हैं।",
+        "The first woman Chief Election Commissioner was V.S. Ramadevi.",
+        "भारत की पहली महिला मुख्य चुनाव आयुक्त वी.एस. रामादेवी थीं।",
+        "Braille EVMs are available for visually impaired voters.",
+        "दृष्टिहीन मतदाताओं के लिए ब्रेल EVM उपलब्ध हैं।",
+        "Election duty is considered national service.",
+        "चुनाव ड्यूटी को राष्ट्रीय सेवा माना जाता है।",
+        "Voters can get information via Voter Helpline 1950.",
+        "मतदाता हेल्पलाइन 1950 से जानकारी प्राप्त कर सकते हैं।",
+        "The Election Commission's website is eci.gov.in.",
+        "चुनाव आयोग की वेबसाइट eci.gov.in है।"
+    ];
+    let tickerIndex = 0;
+    function updateTicker() {
+        const track = document.getElementById('news-ticker-track');
+        if (!track) return;
+        track.textContent = newsFacts[tickerIndex];
+        // Restart animation
+        track.style.animation = 'none';
+        void track.offsetWidth; // trigger reflow
+        track.style.animation = '';
+        tickerIndex = (tickerIndex + 1) % newsFacts.length;
+    }
+    setInterval(updateTicker, 10000);
+    window.addEventListener('DOMContentLoaded', updateTicker);
+    </script>
+    <style>
+    .welcome-banner {
+        width: 100vw;
+        background: #fff;
+        color: #222;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.1rem;
+        font-size: 1.35rem;
+        font-weight: 600;
+        padding: 1.1rem 0 0.7rem 0;
+        box-shadow: 0 2px 12px rgba(52,152,219,0.04);
+        letter-spacing: 0.2px;
+        margin-top: 2.5rem;
+    }
+    .flag-icon {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .welcome-text {
+        vertical-align: middle;
+    }
+    @media (max-width: 600px) {
+        .welcome-banner {
+            font-size: 1.05rem;
+            padding: 0.7rem 0 0.4rem 0;
+            gap: 0.6rem;
+        }
+        .flag-icon svg {
+            width: 32px;
+            height: 20px;
+        }
+    }
+    .news-ticker-bar {
+        width: 100vw;
+        background: linear-gradient(90deg, #3498db 80%, #5dade2 100%);
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 3000;
+        box-shadow: 0 2px 12px rgba(52,152,219,0.10);
+        letter-spacing: 0.2px;
+    }
+    .news-ticker-track {
+        display: inline-block;
+        white-space: nowrap;
+        padding-left: 2rem;
+        animation: ticker-move 14s linear;
+    }
+    @keyframes ticker-move {
+        0% { transform: translateX(100vw); }
+        100% { transform: translateX(-100vw); }
+    }
+    body { padding-top: 2.5rem; }
+    @media (max-width: 600px) {
+        .news-ticker-bar { font-size: 0.98rem; padding: 0.35rem 0; }
+        body { padding-top: 2.1rem; }
+    }
+    </style>
+
+    <header class="top-bar">
+        <div class="logo">
+            <span class="tiranga-icon" style="display:inline-block;vertical-align:middle;width:32px;height:20px;margin-right:8px;">
+                <svg width="32" height="20" viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="6.67" y="0" fill="#FF9933"/>
+                    <rect width="32" height="6.67" y="6.67" fill="#FFFFFF"/>
+                    <rect width="32" height="6.66" y="13.34" fill="#138808"/>
+                    <circle cx="16" cy="10" r="2.2" fill="none" stroke="#000088" stroke-width="0.7"/>
+                    <g stroke="#000088" stroke-width="0.3">
+                        <g>
+                            <line x1="16" y1="7.8" x2="16" y2="12.2"/>
+                            <line x1="13.8" y1="10" x2="18.2" y2="10"/>
+                        </g>
+                        <g transform="rotate(45 16 10)">
+                            <line x1="16" y1="7.8" x2="16" y2="12.2"/>
+                            <line x1="13.8" y1="10" x2="18.2" y2="10"/>
+                        </g>
+                        <g transform="rotate(22.5 16 10)">
+                            <line x1="16" y1="7.8" x2="16" y2="12.2"/>
+                            <line x1="13.8" y1="10" x2="18.2" y2="10"/>
+                        </g>
+                        <g transform="rotate(-22.5 16 10)">
+                            <line x1="16" y1="7.8" x2="16" y2="12.2"/>
+                            <line x1="13.8" y1="10" x2="18.2" y2="10"/>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            Votezy
+        </div>
+        <nav class="user-nav">
+            <div class="nav-btn-group">
+                <button id="nav-help-btn" class="nav-btn">
+                    <svg style="vertical-align:middle;margin-right:4px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+                    Help
+                </button>
+                <button id="aboutUsBtn" class="about-us-btn">
+                    <svg style="vertical-align:middle;margin-right:4px;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    About Us
+                </button>
+            </div>
+    <!-- Help Center Modal -->
+    <div id="help-dropdown" class="help-dropdown" style="display:none;">
+      <div class="help-dropdown-arrow"></div>
+      <div class="help-dropdown-content">
+        <button class="help-close" id="help-close" title="Close Help">&times;</button>
+        <h2 class="help-title">Help Center</h2>
+        <div class="help-sections">
+          <div class="help-section" data-section="faq">
+            <button class="help-section-toggle">FAQs</button>
+            <div class="help-section-content">
+              <ul class="faq-list">
+                <li><span class="faq-q">How to register to vote?</span><br><span class="faq-answer">Visit the official Election Commission website or your nearest voter center. Fill out Form 6 and submit required documents.</span></li>
+                <li><span class="faq-q">How to check voter status?</span><br><span class="faq-answer">Go to the Voter Portal, enter your details, and check your enrollment status online.</span></li>
+                <li><span class="faq-q">How to vote online/offline?</span><br><span class="faq-answer">Offline: Visit your polling booth with your voter ID. Online: If eligible, log in to the e-voting portal and follow the instructions.</span></li>
+                <li><span class="faq-q">What documents are needed?</span><br><span class="faq-answer">Aadhaar card, passport, driving license, or any government-issued photo ID for verification.</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="help-section" data-section="guides">
+            <button class="help-section-toggle">Step-by-Step Guides</button>
+            <div class="help-section-content">
+              <ul class="guide-list">
+                <li><a href="#" onclick="alert('Video walkthrough coming soon!')">Watch: How to Register to Vote</a></li>
+                <li><a href="#" onclick="alert('Video walkthrough coming soon!')">Watch: How to Vote Online</a></li>
+                <li><a href="#" onclick="alert('Visual guide coming soon!')">Visual Guide: Using the Platform</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="help-section" data-section="contact">
+            <button class="help-section-toggle">Contact Support</button>
+            <div class="help-section-content">
+              <p><span class="help-label">Email:</span> <a href="mailto:votezy9464@gmail.com">votezy9464@gmail.com</a></p>
+              <p><span class="help-label">Phone:</span> <a href="tel:9889626386">9889626386</a></p>
+              <button onclick="alert('Live chat coming soon!')" class="help-action-btn">Live Chat</button>
+            </div>
+          </div>
+          <div class="help-section" data-section="chatbot">
+            <button class="help-section-toggle">Chatbot</button>
+            <div class="help-section-content">
+              <p>Type your question below and get instant answers!</p>
+              <input type="text" id="help-chatbot-input" class="help-chatbot-input" placeholder="Ask a question..." />
+              <button id="help-chatbot-send" class="help-action-btn">Ask</button>
+              <div id="help-chatbot-response" class="help-chatbot-response"></div>
+            </div>
+          </div>
+          <div class="help-section" data-section="glossary">
+            <button class="help-section-toggle">Glossary</button>
+            <div class="help-section-content">
+              <ul class="glossary-list">
+                <li><span class="help-label">Voter ID:</span> Official identification for eligible voters.</li>
+                <li><span class="help-label">Polling Booth:</span> Place where voting takes place.</li>
+                <li><span class="help-label">Ballot:</span> The method by which a vote is cast.</li>
+                <li><span class="help-label">Returning Officer:</span> Official in charge of election process in a constituency.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="help-section" data-section="accessibility">
+            <button class="help-section-toggle">Accessibility Help</button>
+            <div class="help-section-content">
+              <ul class="access-list">
+                <li>Use the <b>font size</b> controls in your browser for easier reading.</li>
+                <li>Screen reader support is enabled for all major sections.</li>
+                <li>High-contrast mode available in browser settings.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="help-section" data-section="report">
+            <button class="help-section-toggle">Report an Issue</button>
+            <div class="help-section-content">
+              <form id="help-report-form">
+                <label for="report-desc">Describe the issue:</label><br>
+                <textarea id="report-desc" required style="width:100%;min-height:60px;"></textarea><br>
+                <button type="submit" class="help-action-btn">Submit Report</button>
+              </form>
+              <div id="help-report-success" style="display:none;color:#27ae60;font-weight:600;margin-top:0.7rem;">Thank you for reporting! Our team will review it soon.</div>
+            </div>
+          </div>
+          <div class="help-section" data-section="feedback">
+            <button class="help-section-toggle">Feedback Form</button>
+            <div class="help-section-content">
+              <form id="help-feedback-form">
+                <label for="feedback-msg">Your feedback:</label><br>
+                <textarea id="feedback-msg" required style="width:100%;min-height:60px;"></textarea><br>
+                <button type="submit" class="help-action-btn">Send Feedback</button>
+              </form>
+              <div id="help-feedback-success" style="display:none;color:#27ae60;font-weight:600;margin-top:0.7rem;">Thank you for your feedback!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    .help-dropdown {
+      position: absolute;
+      left: 0;
+      top: 2.5rem;
+      z-index: 3000;
+      min-width: 340px;
+      max-width: 98vw;
+      background: transparent;
+      display: block;
+    }
+    .help-dropdown-arrow {
+      width: 0; height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-bottom: 16px solid #fff;
+      margin-left: 2.2rem;
+      margin-bottom: -8px;
+      filter: drop-shadow(0 2px 4px rgba(52,152,219,0.10));
+    }
+    .help-dropdown-content {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      font-family: 'Roboto',sans-serif;
+      animation: fadeIn 0.2s;
+    }
+    .help-close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #e67e22;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.18s;
+    }
+    .help-close:hover { opacity: 1; }
+    .help-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #217dbb;
+      margin-bottom: 0.5rem;
+      text-align: left;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(52,152,219,0.07);
+    }
+    .help-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .help-section {
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(52,152,219,0.07);
+      background: #f7fafd;
+      margin-bottom: 0.2rem;
+    }
+    .help-section-toggle {
+      width: 100%;
+      background: linear-gradient(90deg,#e67e22 70%,#ffb347 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.08rem;
+      border: none;
+      border-radius: 12px 12px 0 0;
+      padding: 0.7rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.18s;
+      letter-spacing: 0.2px;
+      font-family: 'Roboto',sans-serif;
+      box-shadow: 0 2px 8px rgba(230,126,34,0.07);
+    }
+    .help-section-toggle:hover {
+      background: linear-gradient(90deg,#ffb347 70%,#e67e22 100%);
+    }
+    .help-section-content {
+      display: none;
+      padding: 0.8rem 1.1rem 1.1rem 1.1rem;
+      font-size: 1.01rem;
+      color: #444;
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      font-family: 'Roboto',sans-serif;
+    }
+    .help-section.active .help-section-content {
+      display: block;
+    }
+    .help-action-btn {
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: background 0.18s;
+      font-family: 'Roboto',sans-serif;
+      font-weight: 600;
+    }
+    .help-action-btn:hover {
+      background: #217dbb;
+    }
+    .faq-q {
+      color: #e67e22;
+      font-weight: 700;
+      font-size: 1.05rem;
+      font-family: 'Roboto',sans-serif;
+    }
+    .faq-answer {
+      color: #217dbb;
+      font-size: 0.98rem;
+      font-family: 'Roboto',sans-serif;
+    }
+    .help-label {
+      color: #e67e22;
+      font-weight: 700;
+      font-family: 'Roboto',sans-serif;
+    }
+    @media (max-width: 600px) {
+      .help-dropdown {
+        min-width: 98vw;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 2.5rem;
+      }
+      .help-dropdown-content {
+        padding: 1.1rem 0.5rem 0.5rem 0.5rem;
+        max-width: 98vw;
+      }
+      .help-title { font-size: 1.1rem; }
+      .help-section-toggle { font-size: 0.98rem; }
+    }
+    </style>
+
+    <script>
+    // Help Center dropdown logic
+    document.addEventListener('DOMContentLoaded', function() {
+      var helpDropdown = document.getElementById('help-dropdown');
+      var helpClose = document.getElementById('help-close');
+      var navHelpBtn = document.getElementById('nav-help-btn');
+      var sectionToggles = null;
+      var sections = null;
+      function positionDropdown() {
+        if (!navHelpBtn || !helpDropdown) return;
+        var rect = navHelpBtn.getBoundingClientRect();
+        var dropdownWidth = Math.max(340, Math.min(window.innerWidth - 24, 420));
+        var left = rect.left + window.scrollX;
+        if (left + dropdownWidth > window.innerWidth - 12) {
+          left = window.innerWidth - dropdownWidth - 12;
+        }
+        helpDropdown.style.left = left + 'px';
+        helpDropdown.style.top = (rect.bottom + window.scrollY) + 'px';
+        helpDropdown.style.minWidth = dropdownWidth + 'px';
+        helpDropdown.style.maxWidth = dropdownWidth + 'px';
+      }
+      if (navHelpBtn) {
+        navHelpBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (helpDropdown.style.display === 'block') {
+            helpDropdown.style.display = 'none';
+            return;
+          }
+          positionDropdown();
+          helpDropdown.style.display = 'block';
+          setTimeout(function() { helpDropdown.focus && helpDropdown.focus(); }, 10);
+          sectionToggles = helpDropdown.querySelectorAll('.help-section-toggle');
+          sections = helpDropdown.querySelectorAll('.help-section');
+        });
+      }
+      if (helpClose) {
+        helpClose.addEventListener('click', function() {
+          helpDropdown.style.display = 'none';
+        });
+      }
+      document.addEventListener('click', function(e) {
+        if (helpDropdown.style.display === 'block' && !helpDropdown.contains(e.target) && !navHelpBtn.contains(e.target)) {
+          helpDropdown.style.display = 'none';
+        }
+      });
+      window.addEventListener('resize', function() {
+        if (helpDropdown.style.display === 'block') positionDropdown();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') helpDropdown.style.display = 'none';
+      });
+      // Section toggles (delegated)
+      document.body.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('help-section-toggle')) return;
+        var btn = e.target;
+        var section = btn.closest('.help-section');
+        if (section.classList.contains('active')) {
+          section.classList.remove('active');
+        } else {
+          var allSections = helpDropdown.querySelectorAll('.help-section');
+          allSections.forEach(function(s) { s.classList.remove('active'); });
+          section.classList.add('active');
+        }
+      });
+      // Chatbot demo (static)
+      document.body.addEventListener('click', function(e) {
+        if (e.target.id !== 'help-chatbot-send') return;
+        var chatbotInput = helpDropdown.querySelector('#help-chatbot-input');
+        var chatbotResponse = helpDropdown.querySelector('#help-chatbot-response');
+        var q = chatbotInput.value.trim();
+        if (!q) return;
+        chatbotResponse.innerHTML = '<em>Thinking...</em>';
+        setTimeout(function() {
+          chatbotResponse.innerHTML = 'This is a demo. For real answers, contact support!';
+        }, 900);
+      });
+      // Report form
+      document.body.addEventListener('submit', function(e) {
+        if (e.target.id !== 'help-report-form') return;
+        e.preventDefault();
+        var reportSuccess = helpDropdown.querySelector('#help-report-success');
+        reportSuccess.style.display = 'block';
+        setTimeout(function() { reportSuccess.style.display = 'none'; }, 3000);
+        e.target.reset();
+      });
+      // Feedback form
+      document.body.addEventListener('submit', function(e) {
+        if (e.target.id !== 'help-feedback-form') return;
+        e.preventDefault();
+        var feedbackSuccess = helpDropdown.querySelector('#help-feedback-success');
+        feedbackSuccess.style.display = 'block';
+        setTimeout(function() { feedbackSuccess.style.display = 'none'; }, 3000);
+        e.target.reset();
+      });
+    });
+    </script>
+            <!-- About Us Modal -->
+            <div id="aboutUsModal" class="about-us-modal">
+                <div class="about-us-modal-content" style="background:#fff;border-radius:18px;box-shadow:0 8px 32px rgba(52,152,219,0.18);max-width:480px;width:92vw;max-height:88vh;display:flex;flex-direction:column;position:relative;overflow:hidden;margin:auto;">
+                    <span class="about-us-close" id="aboutUsClose">&times;</span>
+                    <div class="about-us-header" style="display:flex;align-items:center;gap:0.7rem;margin-bottom:1.2rem;">
+                        <span class="about-us-icon" style="font-size:2.2rem;">🗳️</span>
+                        <h2 style="font-size:1.5rem;font-weight:800;color:#217dbb;margin:0;">About Us – Votezy</h2>
+                    </div>
+                    <div class="about-us-body" style="font-size:1.08rem;color:#222;line-height:1.7;">
+                        <div style="overflow-y:auto;max-height:62vh;padding-right:8px;">
+                            <p><b>Votezy</b> is a smart, secure, and user-friendly online voting platform designed to modernize and simplify the voting process. We ensure free, fair, and transparent elections using cutting-edge technologies like <b>Java</b>, <b>Spring Boot</b>, and <b>MySQL</b>, combined with Aadhaar-based OTP verification and optional biometric/face authentication.</p>
+                            <div style="margin-top:1.2rem;">
+                                <h3 style="font-size:1.15rem;color:#3498db;margin-bottom:0.3rem;">👨‍💻 Developed By</h3>
+                                <p>Votezy is an innovation project by passionate students from Technocrats Group of Institutions, Bhopal, aiming to digitally empower India's democracy.</p>
+                            </div>
+                            <div style="margin-top:1.2rem;">
+                                <h3 style="font-size:1.15rem;color:#3498db;margin-bottom:0.3rem;">🎯 Our Mission</h3>
+                                <p>To bring technology, transparency, and trust to the heart of voting — ensuring every eligible citizen can vote securely from anywhere.</p>
+                            </div>
+                            <div style="margin-top:1.2rem;">
+                                <h3 style="font-size:1.15rem;color:#3498db;margin-bottom:0.3rem;">🚀 Future Goals</h3>
+                                <ul style="margin-left:1.2rem;">
+                                    <li>Integrate AI-based identity verification</li>
+                                    <li>Enable blockchain-backed voting for tamper-proof records</li>
+                                    <li>Launch Votezy for college elections, local bodies, and national-level pilots</li>
+                                </ul>
+                            </div>
+                            <blockquote class="about-us-quote" style="margin-top:1.5rem;background:#f7fafd;padding:1rem 1.2rem;border-radius:12px;font-style:italic;color:#217dbb;font-size:1.08rem;box-shadow:0 2px 8px rgba(52,152,219,0.07);">🗣️ "Your Vote, Your Voice – Now Smarter with Votezy."</blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <script>
+    // About Us Modal functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        var aboutBtn = document.getElementById('aboutUsBtn');
+        var aboutModal = document.getElementById('aboutUsModal');
+        var aboutClose = document.getElementById('aboutUsClose');
+        aboutBtn.onclick = function() {
+            aboutModal.style.display = 'flex';
+            setTimeout(function(){ aboutModal.classList.add('show'); }, 10);
+        };
+        aboutClose.onclick = function() {
+            aboutModal.classList.remove('show');
+            setTimeout(function(){ aboutModal.style.display = 'none'; }, 300);
+        };
+        window.onclick = function(event) {
+            if (event.target == aboutModal) {
+                aboutModal.classList.remove('show');
+                setTimeout(function(){ aboutModal.style.display = 'none'; }, 300);
+            }
+        };
+    });
+    </script>
+
+    <!-- Welcome Banner with Indian Flag (moved below header) -->
+    <div class="welcome-banner">
+        <span class="flag-icon">
+            <svg width="48" height="30" viewBox="0 0 48 30" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+                <rect width="48" height="10" y="0" fill="#FF9933"/>
+                <rect width="48" height="10" y="10" fill="#FFFFFF"/>
+                <rect width="48" height="10" y="20" fill="#138808"/>
+                <circle cx="24" cy="15" r="3.5" fill="none" stroke="#000088" stroke-width="1.1"/>
+                <g stroke="#000088" stroke-width="0.5">
+                    <g>
+                        <line x1="24" y1="11.5" x2="24" y2="18.5"/>
+                        <line x1="20.5" y1="15" x2="27.5" y2="15"/>
+                    </g>
+                    <g transform="rotate(45 24 15)">
+                        <line x1="24" y1="11.5" x2="24" y2="18.5"/>
+                        <line x1="20.5" y1="15" x2="27.5" y2="15"/>
+                    </g>
+                    <g transform="rotate(22.5 24 15)">
+                        <line x1="24" y1="11.5" x2="24" y2="18.5"/>
+                        <line x1="20.5" y1="15" x2="27.5" y2="15"/>
+                    </g>
+                    <g transform="rotate(-22.5 24 15)">
+                        <line x1="24" y1="11.5" x2="24" y2="18.5"/>
+                        <line x1="20.5" y1="15" x2="27.5" y2="15"/>
+                    </g>
+                </g>
+            </svg>
+        </span>
+        <span class="welcome-text">Welcome to Votezy – Empowering Every Voter!</span>
+    </div>
+    <!-- Statistics Snapshot Section -->
+    <section class="stats-snapshot">
+        <div class="stat-pop">
+            <div class="stat-value">950M+</div>
+            <div class="stat-label">Eligible Voters</div>
+        </div>
+        <div class="stat-pop">
+            <div class="stat-value">1M+</div>
+            <div class="stat-label">Polling Stations</div>
+        </div>
+        <div class="stat-pop">
+            <div class="stat-value">67.4%</div>
+            <div class="stat-label">2019 Turnout</div>
+        </div>
+        <div class="stat-pop">
+            <div class="stat-value">2,300+</div>
+            <div class="stat-label">Political Parties</div>
+        </div>
+    </section>
+
+    <!-- Main Panels (Card Section) moved below statistics snapshot and above video section -->
+    <section class="card-section" style="width:100%;max-width:900px;padding:0 1rem;margin-top:0;position:relative;">
+        <div class="card-grid">
+            <div class="card" data-role="admin">
+                <div class="card-content">
+                    <h2>
+                        <svg width="22" height="22" style="vertical-align:middle;margin-right:4px;" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M9 11V7a4 4 0 1 1 8 0v4"/></svg>
+                        Admin
+                    </h2>
+                    <p>
+                        <svg width="16" height="16" style="vertical-align:middle;margin-right:2px;" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="7" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+                        Manage Elections
+                    </p>
+                </div>
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m-9.7 10.7l-.7 .7m12.1 -.7l-.7 .7m-8.9 -10.7a6 6 0 1 1 0 8a6 6 0 0 1 0 -8z"/></svg>
+                </div>
+            </div>
+            <div class="card" data-role="voter">
+                <div class="card-content">
+                    <h2>
+                        <svg width="22" height="22" style="vertical-align:middle;margin-right:4px;" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                        Voter
+                    </h2>
+                    <p>
+                        <svg width="16" height="16" style="vertical-align:middle;margin-right:2px;" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        Cast Your Vote
+                    </p>
+                </div>
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12l0 9" /><path d="M12 12l-8 -4.5" /><path d="M16 5.25l-8 4.5" /></svg>
+                </div>
+            </div>
+            <div class="card" data-role="candidate">
+                <div class="card-content">
+                    <h2>
+                        <svg width="22" height="22" style="vertical-align:middle;margin-right:4px;" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M15 11l2 2l4 -4" /></svg>
+                        Candidate
+                    </h2>
+                    <p>
+                        <svg width="16" height="16" style="vertical-align:middle;margin-right:2px;" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M12 4h9"/><rect x="3" y="8" width="6" height="8" rx="1"/><rect x="15" y="8" width="6" height="8" rx="1"/></svg>
+                        Present Your Platform
+                    </p>
+                </div>
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M15 11l2 2l4 -4" /></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Timer Section -->
+    <section class="countdown-section">
+        <div class="countdown-card">
+            <div class="countdown-title">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Next Election Countdown
+            </div>
+            <div class="countdown-timer" id="countdown-timer">
+                <div class="countdown-item"><span id="cd-days">00</span><span class="cd-label">Days</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span id="cd-hours">00</span><span class="cd-label">Hours</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span id="cd-mins">00</span><span class="cd-label">Min</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span id="cd-secs">00</span><span class="cd-label">Sec</span></div>
+            </div>
+            <div class="countdown-note">General Election 2026</div>
+        </div>
+    </section>
+
+    <!-- Video & Why Online Voting Row -->
+    <section class="video-why-row">
+        <div class="video-awareness-rect">
+            <h2 class="video-awareness-title">Voting Awareness: Why Every Vote Counts</h2>
+            <div class="video-container">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/sV3yj045o2A?autoplay=1&mute=1&loop=1&playlist=sV3yj045o2A&controls=0&modestbranding=1&showinfo=0&rel=0"
+                    title="Voting Awareness Video"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                    style="display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;"
+                ></iframe>
+            </div>
+        </div>
+        <div class="why-online-rect">
+            <h2 class="why-title">Why Online Voting?</h2>
+            <ul class="why-list">
+                <li><strong>Secure & Private:</strong> End-to-end encryption and strict authentication keep your vote safe and confidential.</li>
+                <li><strong>Transparent & Auditable:</strong> Every vote is recorded with a verifiable digital trail, ensuring full transparency.</li>
+                <li><strong>Accessible to All:</strong> Vote from anywhere, anytime—no matter your location or ability.</li>
+                <li><strong>Eco-Friendly:</strong> Reduces paper waste and carbon footprint for a greener democracy.</li>
+                <li><strong>Faster Results:</strong> Instant digital counting means results are available quickly and accurately.</li>
+                <li><strong>Trusted by Millions:</strong> Our platform is built by experts, tested by independent auditors, and trusted by voters nationwide.</li>
+            </ul>
+            <div class="why-trust-badge">Your Vote. Your Voice. 100% Secure.</div>
+        </div>
+        <div class="blog-news-rect">
+            <h2 class="blog-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:7px;"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg>
+                Election Blog & News
+            </h2>
+            <div class="blog-list" id="blog-list">
+                <!-- Blog/news items will be injected here -->
+            </div>
+            <button class="blog-more-btn" onclick="showMoreBlogs()">More Articles</button>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="photo-gallery-section">
+        <h2 class="gallery-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:7px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            Photo Gallery: Election Events & Campaigns
+        </h2>
+        <div class="gallery-grid" id="gallery-grid">
+            <img src="local1.jpg" alt="Voters showing inked thumb in queue" class="gallery-img" />
+            <img src="local2.jpg" alt="Vote India with tricolor wave" class="gallery-img" />
+            <img src="local3.jpg" alt="Vote India three hands" class="gallery-img" />
+            <img src="local4.jpg" alt="Vote India group illustration" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw6Qw0QeQb6K" alt="Vote Power Poster" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4Qw1QnA" alt="Don't be a goat, vote" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1QeQb6K" alt="Vote India" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2QeQb6K" alt="Vote Proud" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3QeQb6K" alt="Voting Finger" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5QeQb6K" alt="Vote Illustration" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6QeQb6K" alt="Vote for India" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7QeQb6K" alt="Voters in Line" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8QeQb6K" alt="Voters Queue" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9QeQb6K" alt="Voting Inked Finger" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaQeQb6K" alt="Awareness Event" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbQeQb6K" alt="Voting Mark" class="gallery-img" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcQeQb6K" alt="India Vote Map" class="gallery-img" />
+        </div>
+        <button class="gallery-more-btn" id="gallery-more-btn">See More Photos</button>
+        <div class="gallery-quote-pop" id="gallery-quote-pop" tabindex="0" onclick="this.classList.toggle('active')">
+            <span class="gallery-quote-icon">🗳️</span>
+            <span class="gallery-quote-text">"Your vote is your voice. Be proud, be aware, and inspire others to participate in democracy!"</span>
+        </div>
+    <style>
+    .gallery-quote-pop {
+        margin: 2.2rem auto 0 auto;
+        background: linear-gradient(90deg, #eaf6ff 70%, #d6eaff 100%);
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(52,152,219,0.13);
+        padding: 1.1rem 2.2rem;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        font-size: 1.18rem;
+        font-weight: 600;
+        color: #217dbb;
+        cursor: pointer;
+        transition: box-shadow 0.18s, background 0.18s;
+        border: 1.5px solid #d6eaff;
+        position: relative;
+        z-index: 1;
+        outline: none;
+        user-select: none;
+    }
+    .gallery-quote-pop.active {
+        background: linear-gradient(90deg, #3498db 70%, #5dade2 100%);
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+    }
+    .gallery-quote-icon {
+        font-size: 1.7rem;
+        margin-right: 0.7rem;
+    }
+    </style>
+    </section>
+        <button class="terms-btn" title="Terms & Conditions" aria-label="Terms & Conditions" style="position:fixed;bottom:1.2rem;left:1.2rem;z-index:1000;display:flex;align-items:center;gap:0.5rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="7" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+            Terms & Conditions
+        </button>
+        <button id="chatbot-btn" class="chatbot-btn" title="Chat with Votezy" aria-label="Chatbot" tabindex="0" style="position:fixed;bottom:1.2rem;right:1.2rem;z-index:1000;width:56px;height:56px;background:#3498db;color:#fff;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 16px rgba(52,152,219,0.15);cursor:pointer;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <section class="facts-section">
+            <div id="fact-quote" class="fact-quote"></div>
+        </section>
+        <!-- Carousel/image section removed as requested -->
+
+    <script src="script.js"></script>
+    <script src="carousel.js"></script>
+    <script src="facts.js"></script>
+    <script src="chatbot.js"></script>
+    <style>
+    .photo-gallery-section {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 2.5rem auto;
+        padding: 0 1rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 2;
+    }
+    .gallery-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #217dbb;
+        margin-bottom: 1.1rem;
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.2rem;
+        width: 100%;
+        max-width: 900px;
+    }
+    .gallery-img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(52,152,219,0.10);
+        cursor: pointer;
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: 2px solid #eaf6ff;
+    }
+    .gallery-img:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+        border-color: #3498db;
+    }
+    @media (max-width: 900px) {
+        .photo-gallery-section {
+            max-width: 98vw;
+            padding: 0 0.3rem;
+        }
+        .gallery-grid {
+            max-width: 98vw;
+            gap: 0.7rem;
+        }
+    }
+    @media (max-width: 600px) {
+        .gallery-title {
+            font-size: 1.05rem;
+        }
+        .gallery-grid {
+            gap: 0.4rem;
+        }
+    }
+    .blog-news-rect {
+        background: linear-gradient(135deg, #fffbe6 60%, #f7fafd 100%);
+        border-radius: 22px;
+        box-shadow: 0 8px 36px rgba(230, 126, 34, 0.13), 0 2px 8px rgba(0,0,0,0.05);
+        padding: 1.6rem 1.4rem 2.2rem 1.4rem;
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        margin: 0;
+        transition: box-shadow 0.18s, transform 0.18s;
+        border: 1.5px solid #ffe5b4;
+        justify-content: flex-start;
+        height: 100%;
+    }
+    .blog-news-rect:hover {
+        box-shadow: 0 16px 48px rgba(230, 126, 34, 0.18), 0 4px 16px rgba(0,0,0,0.08);
+        transform: translateY(-4px) scale(1.02);
+        border-color: #e67e2233;
+    }
+    .blog-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #e67e22;
+        margin-bottom: 0.8rem;
+        text-align: left;
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .blog-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        margin-bottom: 1.1rem;
+        min-height: 120px;
+    }
+    .blog-item {
+        background: #fff;
+        border-left: 4px solid #e67e22;
+        border-radius: 8px;
+        padding: 0.7rem 1rem 0.7rem 0.9rem;
+        font-size: 1.05rem;
+        color: #444;
+        box-shadow: 0 2px 8px rgba(230, 126, 34, 0.04);
+        transition: background 0.15s, box-shadow 0.15s;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+    .blog-item:hover {
+        background: #fffbe6;
+        box-shadow: 0 4px 16px rgba(230, 126, 34, 0.10);
+    }
+    .blog-item-title {
+        font-weight: 600;
+        color: #e67e22;
+        font-size: 1.08rem;
+        margin-bottom: 0.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .blog-item-date {
+        font-size: 0.88rem;
+        color: #888;
+        margin-bottom: 0.1rem;
+    }
+    .blog-item-desc {
+        font-size: 0.98rem;
+        color: #444;
+    }
+    .blog-more-btn {
+        background: linear-gradient(90deg, #e67e22 70%, #ffb347 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.02rem;
+        border-radius: 8px;
+        padding: 0.5rem 1.2rem;
+        border: none;
+        box-shadow: 0 2px 8px rgba(230, 126, 34, 0.10);
+        letter-spacing: 0.2px;
+        cursor: pointer;
+        transition: background 0.18s;
+        margin-top: 0.2rem;
+        align-self: flex-end;
+    }
+    .blog-more-btn:hover {
+        background: linear-gradient(90deg, #ffb347 70%, #e67e22 100%);
+    }
+    .countdown-section {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 2.2rem auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        position: relative;
+    }
+    .countdown-card {
+        background: linear-gradient(120deg, #eaf6ff 70%, #d6eaff 100%);
+        border-radius: 20px;
+        box-shadow: 0 6px 32px rgba(52,152,219,0.13), 0 1.5px 6px rgba(0,0,0,0.04);
+        padding: 1.3rem 2.2rem 1.1rem 2.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 700px;
+        border: 1.5px solid #d6eaff;
+        margin: 0 auto;
+        position: relative;
+        animation: popin-stat 0.7s cubic-bezier(.4,1.4,.6,1);
+    }
+    .countdown-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #217dbb;
+        margin-bottom: 0.7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        letter-spacing: 0.2px;
+    }
+    .countdown-timer {
+        display: flex;
+        flex-direction: row;
+        gap: 1.1rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .countdown-item {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.07);
+        padding: 0.5rem 1.1rem 0.3rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 54px;
+        font-family: 'Roboto', sans-serif;
+    }
+    .countdown-item span:first-child {
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #3498db;
+        letter-spacing: 1px;
+        line-height: 1.1;
+    }
+    .cd-label {
+        font-size: 0.85rem;
+        color: #888;
+        font-weight: 500;
+        margin-top: 0.1rem;
+    }
+    .countdown-sep {
+        font-size: 1.5rem;
+        color: #3498db;
+        font-weight: 700;
+        margin: 0 0.2rem;
+        user-select: none;
+    }
+    .countdown-note {
+        font-size: 1.05rem;
+        color: #e67e22;
+        font-weight: 600;
+        margin-top: 0.3rem;
+        letter-spacing: 0.2px;
+    }
+    @media (max-width: 900px) {
+        .countdown-section {
+            max-width: 98vw;
+        }
+        .countdown-card {
+            padding: 1rem 0.7rem 0.8rem 0.7rem;
+            max-width: 98vw;
+        }
+    }
+    @media (max-width: 600px) {
+        .countdown-title {
+            font-size: 1.05rem;
+        }
+        .countdown-card {
+            padding: 0.7rem 0.2rem 0.5rem 0.2rem;
+        }
+        .countdown-timer {
+            gap: 0.5rem;
+        }
+        .countdown-item {
+            min-width: 38px;
+            padding: 0.3rem 0.5rem 0.2rem 0.5rem;
+        }
+    }
+    .video-why-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 2.5rem auto;
+        padding: 0 1rem;
+        box-sizing: border-box;
+        z-index: 2;
+    }
+    .video-awareness-rect, .why-online-rect, .blog-news-rect {
+        background: linear-gradient(135deg, #eaf6ff 60%, #f7fafd 100%);
+        border-radius: 22px;
+        box-shadow: 0 8px 36px rgba(52,152,219,0.13), 0 2px 8px rgba(0,0,0,0.05);
+        padding: 1.6rem 1.4rem 2.2rem 1.4rem;
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin: 0;
+        transition: box-shadow 0.18s, transform 0.18s, max-height 0.35s cubic-bezier(.4,1.4,.6,1), box-shadow 0.18s;
+        border: 1.5px solid #d6eaff;
+        max-width: none;
+        max-height: 340px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .video-awareness-rect.expanded, .why-online-rect.expanded, .blog-news-rect.expanded {
+        max-height: 1200px;
+        box-shadow: 0 16px 48px rgba(52,152,219,0.18), 0 4px 16px rgba(0,0,0,0.08);
+        z-index: 10;
+        cursor: default;
+    }
+    .why-online-rect, .blog-news-rect {
+        overflow-y: auto;
+    }
+    .blog-news-rect {
+        background: linear-gradient(135deg, #fffbe6 60%, #f7fafd 100%);
+        border: 1.5px solid #ffe5b4;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .video-awareness-rect {
+        border-top: 4px solid #3498db;
+    }
+    .why-online-rect {
+        border-top: 4px solid #ffb347;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .video-awareness-rect:hover:not(.expanded), .why-online-rect:hover:not(.expanded), .blog-news-rect:hover:not(.expanded) {
+        box-shadow: 0 16px 48px rgba(52,152,219,0.18), 0 4px 16px rgba(0,0,0,0.08);
+        transform: translateY(-4px) scale(1.02);
+        border-color: #3498db33;
+    }
+    .video-awareness-title {
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #217dbb;
+        margin-bottom: 1.1rem;
+        text-align: center;
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .video-awareness-title::before {
+        content: '\1F4FA'; /* TV emoji */
+        font-size: 1.3rem;
+        margin-right: 0.3rem;
+        vertical-align: middle;
+    }
+    .why-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #e67e22;
+        margin-bottom: 0.8rem;
+        text-align: left;
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .why-title::before {
+        content: '\1F512'; /* Lock emoji */
+        font-size: 1.1rem;
+        margin-right: 0.3rem;
+        vertical-align: middle;
+    }
+    .why-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.1rem 0;
+        width: 100%;
+    }
+    .why-list li {
+        background: #f3f8fd;
+        border-left: 4px solid #3498db;
+        border-radius: 8px;
+        margin-bottom: 0.7rem;
+        padding: 0.7rem 1rem 0.7rem 0.9rem;
+        font-size: 1.05rem;
+        color: #444;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.04);
+        transition: background 0.15s;
+        position: relative;
+    }
+    .why-list li strong {
+        color: #217dbb;
+    }
+    .why-list li:last-child {
+        margin-bottom: 0;
+    }
+    .why-list li:hover {
+        background: #eaf6ff;
+    }
+    .why-trust-badge {
+        background: linear-gradient(90deg, #3498db 70%, #5dade2 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.08rem;
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        margin-top: 0.7rem;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.10);
+        letter-spacing: 0.2px;
+        text-align: center;
+        display: inline-block;
+        border: 1.5px solid #3498db33;
+        position: relative;
+        z-index: 1;
+    }
+    .why-trust-badge::before {
+        content: '\1F3C6'; /* Trophy emoji */
+        font-size: 1.1rem;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+    }
+    .video-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 14px;
+        box-shadow: 0 2px 14px rgba(52,152,219,0.10);
+        background: #000;
+        margin-bottom: 0.2rem;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        border: 2px solid #3498db22;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 14px;
+    }
+    @media (max-width: 900px) {
+        .video-why-row {
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 98vw;
+            margin: 1.2rem auto 1.2rem auto;
+            padding: 0 0.3rem;
+        }
+        .video-awareness-rect, .why-online-rect, .blog-news-rect {
+            padding: 0.9rem 0.3rem 1.3rem 0.3rem;
+            max-width: 98vw;
+            max-height: 340px;
+        }
+        .video-awareness-rect.expanded, .why-online-rect.expanded, .blog-news-rect.expanded {
+            max-height: 1200px;
+        }
+        .video-container {
+            max-width: 98vw;
+        }
+    }
+    @media (max-width: 600px) {
+        .video-awareness-title, .why-title, .blog-title {
+            font-size: 1.05rem;
+        }
+        .video-awareness-rect, .why-online-rect, .blog-news-rect {
+            padding: 0.5rem 0.1rem 0.7rem 0.1rem;
+            max-width: 98vw;
+            max-height: 340px;
+        }
+        .video-awareness-rect.expanded, .why-online-rect.expanded, .blog-news-rect.expanded {
+            max-height: 1200px;
+        }
+    }
+    .card-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto 2.2rem auto;
+        position: relative;
+        margin-top: 3.5rem !important;
+        padding-top: 5.5rem; /* Ensures stat cards above do not overlap panels */
+    }
+    .card-section::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 900px;
+        height: 100%;
+        background: linear-gradient(120deg, #3498db 80%, #5dade2 100%);
+        border-radius: 24px;
+        z-index: 0;
+        opacity: 0.13;
+        box-shadow: 0 8px 32px rgba(52,152,219,0.10);
+    }
+    .card-grid {
+        position: relative;
+        z-index: 1;
+    }
+    .card-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 2.5rem;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        max-width: 900px;
+    }
+    .card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 32px rgba(52,152,219,0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+        padding: 2.2rem 2.5rem 1.5rem 2.5rem;
+        min-width: 340px;
+        max-width: 360px;
+        width: 340px;
+        min-height: 200px;
+        max-height: 240px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: 1.5px solid #e3eaf7;
+    }
+    .card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 12px 36px rgba(52,152,219,0.16), 0 2px 8px rgba(0,0,0,0.06);
+        border-color: #3498db33;
+    }
+    .card-content h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 0.7rem 0;
+        color: #222;
+        letter-spacing: 0.5px;
+        text-align: center;
+    }
+    .card-content p {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0 0 1.2rem 0;
+        text-align: center;
+        font-weight: 500;
+    }
+    .icon-container {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        width: 100%;
+    }
+    @media (max-width: 900px) {
+        .card-grid {
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .card {
+            min-width: 90vw;
+            max-width: 98vw;
+            width: 98vw;
+            min-height: 180px;
+            max-height: 220px;
+            padding: 1.2rem 0.7rem 1rem 0.7rem;
+        }
+    }
+    @media (max-width: 600px) {
+        .card-section {
+            padding: 0;
+        }
+        .card-grid {
+            flex-direction: column;
+            gap: 1.1rem;
+            align-items: center;
+        }
+        .card {
+            min-width: 90vw;
+            max-width: 98vw;
+            width: 98vw;
+            padding: 1.1rem 0.5rem 0.8rem 0.5rem;
+        }
+    }
+    body {
+        background: #f7fafd;
+        /* Remove any background-image */
+        background-image: none !important;
+    }
+    /* Chatbot popup always opens bottom right, matching button */
+    .chatbot-popup {
+        position: fixed;
+        bottom: 80px;
+        right: 1.2rem;
+        width: 340px;
+        max-width: 95vw;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+        z-index: 2000;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1.5px solid #3498db;
+        animation: chatbot-popin 0.25s cubic-bezier(.4,1.4,.6,1) 1;
+    }
+    @keyframes chatbot-popin {
+      0% { transform: scale(0.8) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .chatbot-popup.active {
+        display: flex;
+    }
+    .chatbot-header {
+        background: #3498db;
+        color: #fff;
+        padding: 1rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+    .chatbot-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.10);
+    }
+    .chatbot-messages {
+        padding: 1.1rem 1.2rem 0.7rem 1.2rem;
+        background: #fff;
+        min-height: 80px;
+        max-height: 220px;
+        overflow-y: auto;
+        font-size: 1rem;
+        color: #222;
+    }
+    .chatbot-input {
+        display: flex;
+        border-top: 1px solid #e0e0e0;
+        background: #fafbfc;
+        padding: 0.7rem 1.2rem;
+        gap: 0.5rem;
+    }
+    .chatbot-input input {
+        flex: 1;
+        border: 1px solid #d0d0d0;
+        border-radius: 8px;
+        padding: 0.5rem 0.8rem;
+        font-size: 1rem;
+        outline: none;
+        background: #fff;
+    }
+    .chatbot-input button {
+        background: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.18s;
+    }
+    .chatbot-input button:hover {
+        background: #217dbb;
+    }
+    .chatbot-close {
+        margin-left: auto;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.3rem;
+        cursor: pointer;
+        padding: 0 0.2rem;
+        opacity: 0.7;
+        transition: opacity 0.18s;
+    }
+    .chatbot-close:hover {
+        opacity: 1;
+    }
+    .stats-snapshot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2.2rem;
+        margin: 2.2rem auto 0 auto !important;
+        z-index: 2;
+        position: relative;
+        margin-bottom: 5.5rem !important;
+    }
+    .stat-pop {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 32px rgba(52,152,219,0.13), 0 1.5px 6px rgba(0,0,0,0.04);
+        padding: 1.1rem 2.2rem 0.9rem 2.2rem;
+        min-width: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: 1.5px solid #e3eaf7;
+        position: relative;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-bottom: 0.2rem;
+        animation: popin-stat 0.7s cubic-bezier(.4,1.4,.6,1);
+    }
+    .stat-pop:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 12px 36px rgba(52,152,219,0.16), 0 2px 8px rgba(0,0,0,0.06);
+        border-color: #3498db33;
+    }
+    .stat-value {
+        font-size: 2.1rem;
+        font-weight: 700;
+        color: #3498db;
+        margin-bottom: 0.2rem;
+        letter-spacing: 0.5px;
+    }
+    .stat-label {
+        font-size: 1.05rem;
+        color: #444;
+        font-weight: 500;
+        text-align: center;
+    }
+    @keyframes popin-stat {
+        0% { transform: scale(0.8) translateY(30px); opacity: 0; }
+        100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @media (max-width: 900px) {
+        .stats-snapshot {
+            gap: 1.1rem;
+            margin: 1.2rem auto 1.2rem auto;
+        }
+        .card-section {
+            margin: 0 auto 1.2rem auto;
+        }
+        .video-awareness-section {
+            margin: 1.2rem auto 1.5rem auto;
+        }
+    }
+    @media (max-width: 600px) {
+        .stats-snapshot {
+            flex-direction: column;
+            gap: 0.7rem;
+            align-items: center;
+            margin: 0.7rem auto 0.7rem auto;
+            margin-bottom: 5.5rem !important;
+        }
+        .card-section {
+            margin: 0 auto 0.7rem auto;
+            padding-top: 0 !important;
+        }
+        .video-awareness-section {
+            margin: 0.7rem auto 1rem auto;
+        }
+    }
+
+    /* Voting Awareness Video Section */
+    .video-awareness-section {
+        width: 100vw;
+        max-width: 900px;
+        margin: 2.2rem auto 2.5rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 32px rgba(52,152,219,0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+        padding: 1.2rem 1.2rem 2rem 1.2rem;
+        z-index: 2;
+        position: relative;
+    }
+    .video-awareness-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #3498db;
+        margin-bottom: 1.1rem;
+        text-align: center;
+        letter-spacing: 0.2px;
+    }
+    .video-container {
+        position: relative;
+        width: 100%;
+        max-width: 700px;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(52,152,219,0.08);
+        background: #000;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 12px;
+    }
+    @media (max-width: 900px) {
+        .video-awareness-section {
+            max-width: 98vw;
+            padding: 0.7rem 0.3rem 1.2rem 0.3rem;
+        }
+        .video-container {
+            max-width: 98vw;
+        }
+    }
+    @media (max-width: 600px) {
+        .video-awareness-title {
+            font-size: 1.05rem;
+        }
+        .video-awareness-section {
+            padding: 0.5rem 0.1rem 0.7rem 0.1rem;
+        }
+    }
+    
+    </style>
+    <script>
+    // Simple lightbox for gallery
+    function createLightbox(src, alt) {
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.background = 'rgba(0,0,0,0.85)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 9999;
+        overlay.style.cursor = 'zoom-out';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = alt;
+        img.style.maxWidth = '90vw';
+        img.style.maxHeight = '90vh';
+        img.style.borderRadius = '18px';
+        img.style.boxShadow = '0 8px 32px rgba(52,152,219,0.18)';
+        overlay.appendChild(img);
+        overlay.onclick = () => document.body.removeChild(overlay);
+        document.body.appendChild(overlay);
+    }
+    function setupGalleryLightbox() {
+        document.querySelectorAll('.gallery-img').forEach(img => {
+            img.addEventListener('click', () => createLightbox(img.src, img.alt));
+        });
+    }
+    // Show only 3 images by default, expand on button click
+    function setupGalleryShowMore() {
+        const grid = document.getElementById('gallery-grid');
+        const btn = document.getElementById('gallery-more-btn');
+        if (!grid || !btn) return;
+        const imgs = Array.from(grid.querySelectorAll('.gallery-img'));
+        function showImages(count) {
+            imgs.forEach((img, i) => {
+                img.style.display = i < count ? '' : 'none';
+            });
+        }
+        let expanded = false;
+        showImages(3);
+        btn.onclick = function() {
+            expanded = !expanded;
+            if (expanded) {
+                showImages(imgs.length);
+                btn.textContent = 'Show Less';
+            } else {
+                showImages(3);
+                btn.textContent = 'See More Photos';
+            }
+        };
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+        setupGalleryLightbox();
+        setupGalleryShowMore();
+    });
+    </script>
+    <script>
+    // Expand/collapse logic for video-why-row cards
+    function collapseAllExcept(className) {
+        document.querySelectorAll('.video-awareness-rect, .why-online-rect, .blog-news-rect').forEach(el => {
+            if (!el.classList.contains(className)) el.classList.remove('expanded');
+        });
+    }
+    function setupExpandableCards() {
+        const video = document.querySelector('.video-awareness-rect');
+        const why = document.querySelector('.why-online-rect');
+        const blog = document.querySelector('.blog-news-rect');
+        [video, why, blog].forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only expand if not already expanded
+                if (!card.classList.contains('expanded')) {
+                    collapseAllExcept(card.classList[0]);
+                    card.classList.add('expanded');
+                }
+                e.stopPropagation();
+            });
+        });
+        // Collapse all if click outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.video-why-row')) {
+                [video, why, blog].forEach(card => card.classList.remove('expanded'));
+            }
+        });
+    }
+    window.addEventListener('DOMContentLoaded', setupExpandableCards);
+    </script>
+    <script>
+    // Blog/News Data and Interactivity
+    const blogArticles = [
+        {
+            title: "Lok Sabha 2024: Record Youth Turnout",
+            date: "Aug 1, 2025",
+            desc: "The 2024 Lok Sabha elections saw the highest youth voter turnout in India's history, with over 100 million first-time voters participating.",
+            link: "#"
+        },
+        {
+            title: "E-Voting Pilots Expand to 5 States",
+            date: "Jul 20, 2025",
+            desc: "The Election Commission has announced pilot e-voting projects in five states, aiming to boost accessibility and transparency.",
+            link: "#"
+        },
+        {
+            title: "Women Lead Panchayat Polls",
+            date: "Jul 10, 2025",
+            desc: "Women candidates have won a record number of seats in recent Panchayat elections, marking a milestone for gender equality.",
+            link: "#"
+        },
+        {
+            title: "Election Security: New Tech Deployed",
+            date: "Jun 28, 2025",
+            desc: "Advanced biometric and blockchain technologies are being tested to further secure the voting process.",
+            link: "#"
+        },
+        {
+            title: "Voter Education Week Launched",
+            date: "Jun 15, 2025",
+            desc: "A nationwide campaign to educate voters on their rights and the voting process has been launched by the ECI.",
+            link: "#"
+        }
+    ];
+    let blogIndex = 0;
+    const BLOGS_PER_PAGE = 3;
+    function renderBlogs() {
+        const blogList = document.getElementById('blog-list');
+        if (!blogList) return;
+        blogList.innerHTML = '';
+        for (let i = blogIndex; i < Math.min(blogIndex + BLOGS_PER_PAGE, blogArticles.length); i++) {
+            const article = blogArticles[i];
+            const item = document.createElement('div');
+            item.className = 'blog-item';
+            item.tabIndex = 0;
+            item.onclick = () => window.open(article.link, '_blank');
+            item.innerHTML = `
+                <div class="blog-item-title">📰 ${article.title}</div>
+                <div class="blog-item-date">${article.date}</div>
+                <div class="blog-item-desc">${article.desc}</div>
+            `;
+            blogList.appendChild(item);
+        }
+    }
+    function showMoreBlogs() {
+        blogIndex += BLOGS_PER_PAGE;
+        if (blogIndex >= blogArticles.length) blogIndex = 0;
+        renderBlogs();
+    }
+    window.addEventListener('DOMContentLoaded', renderBlogs);
+    </script>
+    <script>
+    // Countdown Timer Logic
+    // Set your next election date here (YYYY-MM-DDTHH:MM:SS format)
+    const nextElectionDate = new Date('2026-04-15T08:00:00');
+    function updateCountdown() {
+        const now = new Date();
+        let diff = Math.max(0, nextElectionDate - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff -= days * (1000 * 60 * 60 * 24);
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        const mins = Math.floor(diff / (1000 * 60));
+        diff -= mins * (1000 * 60);
+        const secs = Math.floor(diff / 1000);
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    window.addEventListener('DOMContentLoaded', updateCountdown);
+    </script>
+    <script>
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    const role = card.getAttribute('data-role').toUpperCase();
+    sessionStorage.setItem('selectedRole', role);
+    window.location.href = 'login.html';
+  });
+});
+</script>
+    
+
+</body>
+</html>
