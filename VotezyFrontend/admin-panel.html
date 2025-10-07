@@ -305,6 +305,79 @@
             padding: 2rem;
         }
 
+        /* Countdown Timer Styles */
+        .countdown-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .countdown-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-unit {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem 0.8rem;
+            min-width: 80px;
+            backdrop-filter: blur(10px);
+        }
+
+        .countdown-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+        }
+
+        .countdown-status {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        .countdown-ended {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .countdown-active {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%) !important;
+        }
+
+        .countdown-active .countdown-title {
+            color: #fff;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         /* Tables */
         .table-container {
             overflow-x: auto;
@@ -333,7 +406,7 @@
         }
 
         /* Action Buttons */
-        .edit-btn, .delete-btn {
+        .edit-btn, .delete-btn, .candidate-edit-btn, .candidate-delete-btn {
             padding: 0.4rem 0.8rem;
             margin: 0 0.2rem;
             border: none;
@@ -344,22 +417,34 @@
             transition: all 0.2s;
         }
 
-        .edit-btn {
+        .edit-btn, .candidate-edit-btn {
             background: #3498db;
             color: white;
         }
 
-        .edit-btn:hover {
+        .edit-btn:hover, .candidate-edit-btn:hover {
             background: #2980b9;
         }
 
-        .delete-btn {
+        .edit-btn:disabled, .candidate-edit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .delete-btn, .candidate-delete-btn {
             background: #e74c3c;
             color: white;
         }
 
-        .delete-btn:hover {
+        .delete-btn:hover, .candidate-delete-btn:hover {
             background: #c0392b;
+        }
+
+        .delete-btn:disabled, .candidate-delete-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
         /* Forms */
@@ -442,6 +527,157 @@
             color: #fff;
         }
 
+        /* Status and Control Buttons */
+        .status-control-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e3eaf7;
+            flex-wrap: wrap;
+        }
+
+        .btn-status {
+            background: #95a5a6;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: default;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-status.inactive {
+            background: #e74c3c;
+        }
+
+        .btn-status.active {
+            background: #27ae60;
+        }
+
+        .btn-status.completed {
+            background: #8e44ad;
+        }
+
+        .btn-declare-result {
+            background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-declare-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243,156,18,0.3);
+        }
+
+        .btn-declare-result:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-declare-result:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-declare-result.permanently-disabled {
+            background: #27ae60 !important;
+            cursor: default !important;
+            opacity: 1 !important;
+        }
+
+        .btn-declare-result.permanently-disabled:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* View Results Button */
+        .btn-view-results {
+            background: linear-gradient(90deg, #8e44ad 0%, #9b59b6 100%);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-view-results:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(142,68,173,0.3);
+        }
+
+        .btn-view-results:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-view-results:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-view-results.permanently-enabled {
+            background: linear-gradient(90deg, #8e44ad 0%, #9b59b6 100%) !important;
+            cursor: pointer !important;
+            opacity: 1 !important;
+        }
+
+        .btn-view-results.permanently-enabled:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(142,68,173,0.3) !important;
+        }
+
+        /* Reset button specific styling */
+        .btn-reset {
+            background: #e74c3c;
+            color: #fff;
+            border: 1px solid #e74c3c;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 0rem;
+        }
+
+        .btn-reset:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .btn-reset:disabled {
+            background: #bdc3c7;
+            border-color: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         /* Stats Cards */
         .stats-grid {
             display: grid;
@@ -519,7 +755,6 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
-            margin-top: 1rem;
         }
 
         .status-active {
@@ -532,8 +767,13 @@
             color: #721c24;
         }
 
+        .status-completed {
+            background: #e2e3f0;
+            color: #6f42c1;
+        }
+
         /* Modal Styles */
-        #modalOverlay {
+        #modalOverlay, #candidateModalOverlay {
             display: none;
             position: fixed;
             inset: 0;
@@ -541,7 +781,7 @@
             z-index: 999;
         }
 
-        #editModal {
+        #editModal, #editCandidateModal {
             display: none;
             position: fixed;
             top: 15%;
@@ -555,18 +795,18 @@
             width: 300px;
         }
 
-        #editModal h3 {
+        #editModal h3, #editCandidateModal h3 {
             margin-bottom: 1rem;
             color: #3498db;
         }
 
-        #editModal label {
+        #editModal label, #editCandidateModal label {
             display: block;
             margin: 0.5rem 0 0.2rem 0;
             font-weight: 500;
         }
 
-        #editModal input {
+        #editModal input, #editCandidateModal input, #editCandidateModal select {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #ddd;
@@ -574,12 +814,12 @@
             margin-bottom: 1rem;
         }
 
-        #editModal div {
+        #editModal div, #editCandidateModal div {
             display: flex;
             justify-content: space-between;
         }
 
-        #editModal button {
+        #editModal button, #editCandidateModal button {
             width: 48%;
             padding: 8px;
             border: none;
@@ -588,12 +828,12 @@
             font-weight: 500;
         }
 
-        #editModal button[type="submit"] {
+        #editModal button[type="submit"], #editCandidateModal button[type="submit"] {
             background: #3498db;
             color: white;
         }
 
-        #editModal button[type="button"] {
+        #editModal button[type="button"], #editCandidateModal button[type="button"] {
             background: #95a5a6;
             color: white;
         }
@@ -898,6 +1138,24 @@
             .delete-modal-body {
                 padding: 1rem;
             }
+
+            .status-control-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .countdown-display {
+                gap: 0.8rem;
+            }
+
+            .countdown-unit {
+                min-width: 60px;
+                padding: 0.8rem 0.5rem;
+            }
+
+            .countdown-number {
+                font-size: 1.8rem;
+            }
         }
 
         /* Flag Icon */
@@ -934,7 +1192,7 @@
                 <span class="admin-badge">Admin Panel</span>
             </div>
             <div class="user-section">
-                <span>Welcome, Vikash</span>
+                <span>Welcome, System Administrator</span>
                 <a href="index.html" class="header-btn home-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -1106,17 +1364,23 @@
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">45</div>
+                <div class="stat-card" id="total-candidates-card">
+                    <div class="last-updated" id="total-candidates-updated"></div>
+                    <div class="stat-value" id="total-candidates-value">Loading...</div>
                     <div class="stat-label">Total Candidates</div>
+                    <div class="stat-error" id="total-candidates-error" style="display: none;"></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">38</div>
-                    <div class="stat-label">Profile Complteted </div>
+                <div class="stat-card" id="completed-profiles-card">
+                    <div class="last-updated" id="completed-profiles-updated"></div>
+                    <div class="stat-value" id="completed-profiles-value">Loading...</div>
+                    <div class="stat-label">Profile Completed</div>
+                    <div class="stat-error" id="completed-profiles-error" style="display: none;"></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">7</div>
-                    <div class="stat-label">Profile Incompleted </div>
+                <div class="stat-card" id="incomplete-profiles-card">
+                    <div class="last-updated" id="incomplete-profiles-updated"></div>
+                    <div class="stat-value" id="incomplete-profiles-value">Loading...</div>
+                    <div class="stat-label">Profile Incompleted</div>
+                    <div class="stat-error" id="incomplete-profiles-error" style="display: none;"></div>
                 </div>
             </div>
 
@@ -1137,43 +1401,37 @@
                                 <tr>
                                     <th>Candidate ID</th>
                                     <th>Name</th>
-                                    <th>Party</th>
-                                    <th>Constituency</th>
+                                    <th>Username</th>
+                                    <th>Party Name</th>
                                     <th>Symbol</th>
                                     <th>Status</th>
-                                    <th>Registration Date</th>
+                                    <th>Vote Count</th>
+                                    <th>Manage Account</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CID001</td>
-                                    <td>Dr. Suresh Mehta</td>
-                                    <td>Progressive Party</td>
-                                    <td>Mumbai North</td>
-                                    <td>🌅 Lotus</td>
-                                    <td><span class="election-status status-active">Approved</span></td>
-                                    <td>2024-02-01</td>
-                                </tr>
-                                <tr>
-                                    <td>CID002</td>
-                                    <td>Ms. Kavita Singh</td>
-                                    <td>Unity Alliance</td>
-                                    <td>Delhi Central</td>
-                                    <td>🤝 Hand</td>
-                                    <td><span class="election-status status-active">Approved</span></td>
-                                    <td>2024-02-02</td>
-                                </tr>
-                                <tr>
-                                    <td>CID003</td>
-                                    <td>Ravi Nair</td>
-                                    <td>Independent</td>
-                                    <td>Bangalore South</td>
-                                    <td>🌟 Star</td>
-                                    <td><span class="election-status status-inactive">Pending</span></td>
-                                    <td>2024-02-03</td>
-                                </tr>
+                            <tbody id="candidateTableBody">
+                                <!-- Dynamic rows here -->
                             </tbody>
                         </table>
+
+                        <!-- Candidate Modal Overlay -->
+                        <div id="candidateModalOverlay"></div>
+
+                        <!-- Edit Candidate Modal -->
+                        <div id="editCandidateModal">
+                            <h3>Edit Candidate</h3>
+                            <form id="editCandidateForm">
+                                <input type="hidden" id="editCandidateId" />
+                                <label for="editCandidateName">Full Name</label>
+                                <input type="text" id="editCandidateName" required />
+                                <label for="editCandidateUsername">Username (Email)</label>
+                                <input type="email" id="editCandidateUsername" required />
+                                <div>
+                                    <button type="submit">Save</button>
+                                    <button type="button" id="cancelCandidateBtn">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1250,47 +1508,70 @@
                             <button type="submit" class="btn-primary">
                                 Save Election Settings
                             </button>
-                            <button type="button" class="btn-secondary">
-                                Reset Form
+                            <button type="button" class="btn-reset" id="reset-form-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 1 0 3-7.3L6 5"/>
+                                    <path d="M6 2v3h3"/>
+                                </svg>
+                                Reset Settings
                             </button>
                         </div>
                     </form>
-                    <div class="election-status" id="election-status">
-                        <!-- Status will be set dynamically -->
+                    
+                    <!-- Countdown Timer - Moved below the Reset Settings button -->
+                    <div class="countdown-container" id="countdown-container" style="display: none;">
+                        <div class="countdown-title" id="countdown-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                            Election Countdown
+                        </div>
+                        <div class="countdown-display" id="countdown-display">
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="days">00</span>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="hours">00</span>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="minutes">00</span>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="seconds">00</span>
+                                <div class="countdown-label">Seconds</div>
+                            </div>
+                        </div>
+                        <div class="countdown-status" id="countdown-status">Time remaining until election ends</div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Current Election Overview -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="16,12 12,8 8,12"/>
-                            <line x1="12" y1="16" x2="12" y2="8"/>
-                        </svg>
-                        Current Election Overview
-                    </h3>
-                </div>
-                <div class="card-content">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">72%</div>
-                            <div class="stat-label">Voter Turnout</div>
+                    
+                    <!-- Status Control Container with Status Indicator and Control Buttons -->
+                    <div class="status-control-container">
+                        <div class="btn-status inactive" id="status-indicator">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="15" y1="9" x2="9" y2="15"/>
+                                <line x1="9" y1="9" x2="15" y2="15"/>
+                            </svg>
+                            Election Inactive
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value">896</div>
-                            <div class="stat-label">Votes Cast</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">351</div>
-                            <div class="stat-label">Remaining Voters</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">6h 24m</div>
-                            <div class="stat-label">Time Remaining</div>
-                        </div>
+                        <button type="button" class="btn-declare-result" id="declare-result-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.5 0 2.91.37 4.15 1.02"/>
+                            </svg>
+                            Declare Results
+                        </button>
+                        <button type="button" class="btn-view-results" id="view-results-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            View Results
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1325,6 +1606,41 @@
                         Yes, Delete
                     </button>
                     <button class="cancel-delete-btn" onclick="cancelDelete()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidate Delete Confirmation Modal -->
+    <div class="delete-modal" id="candidate-delete-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-header">
+                <h3 class="delete-modal-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3,6 5,6 21,6"/>
+                        <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+                        <line x1="10" y1="11" x2="10" y2="17"/>
+                        <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                    Delete Candidate
+                </h3>
+                <p class="delete-modal-subtitle">This action cannot be undone</p>
+            </div>
+            <div class="delete-modal-body">
+                <p class="delete-message" id="candidate-delete-confirmation-message">
+                    Are you sure you want to delete this candidate? This action is permanent and cannot be reversed.
+                </p>
+                <div class="delete-buttons">
+                    <button class="confirm-delete-btn" id="confirm-candidate-delete-btn" onclick="executeCandidateDelete()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3,6 5,6 21,6"/>
+                            <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+                        </svg>
+                        Yes, Delete
+                    </button>
+                    <button class="cancel-delete-btn" onclick="cancelCandidateDelete()">
                         Cancel
                     </button>
                 </div>
@@ -1395,10 +1711,78 @@
         </div>
     </div>
 
+    <!-- Candidate Edit Confirmation Modal -->
+    <div class="delete-modal" id="candidate-edit-confirm-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-header" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                <h3 class="delete-modal-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20v-6M12 4v2m0 0a8 8 0 1 1 0 16a8 8 0 1 1 0-16z"/>
+                    </svg>
+                    Confirm Candidate Edit
+                </h3>
+                <p class="delete-modal-subtitle">Please confirm your changes</p>
+            </div>
+            <div class="delete-modal-body">
+                <p class="delete-message" id="candidate-edit-confirmation-message">
+                    Are you sure you want to save these changes to the candidate's details?
+                </p>
+                <div class="delete-buttons">
+                    <button class="confirm-delete-btn" id="confirm-candidate-edit-btn">
+                        Yes, Save Changes
+                    </button>
+                    <button class="cancel-delete-btn" id="cancel-candidate-edit-btn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Confirmation Modal -->
+    <div class="delete-modal" id="reset-confirm-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-header">
+                <h3 class="delete-modal-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 3-7.3L6 5"/>
+                        <path d="M6 2v3h3"/>
+                    </svg>
+                    Reset Election Settings
+                </h3>
+                <p class="delete-modal-subtitle">This will clear all election configuration</p>
+            </div>
+            <div class="delete-modal-body">
+                <p class="delete-message">
+                    Are you sure you want to reset all election settings?<br><br>
+                    <strong>This will:</strong><br>
+                    • Clear all election configuration data from the database<br>
+                    • Reset the form to default values<br>
+                    • This action cannot be undone
+                </p>
+                <div class="delete-buttons">
+                    <button class="confirm-delete-btn" id="confirm-reset-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 3-7.3L6 5"/>
+                            <path d="M6 2v3h3"/>
+                        </svg>
+                        Yes, Reset Settings
+                    </button>
+                    <button class="cancel-delete-btn" id="cancel-reset-btn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Initialize voter management elements
         const apiBase = 'http://localhost:8080/api';
         const voterTableBody = document.getElementById('voterTableBody');
+        const candidateTableBody = document.getElementById('candidateTableBody');
+        
+        // Voter modal elements
         const editModal = document.getElementById('editModal');
         const modalOverlay = document.getElementById('modalOverlay');
         const editForm = document.getElementById('editForm');
@@ -1406,6 +1790,15 @@
         const editVoterId = document.getElementById('editVoterId');
         const editFullName = document.getElementById('editFullName');
         const editUsername = document.getElementById('editUsername');
+        
+        // Candidate modal elements
+        const editCandidateModal = document.getElementById('editCandidateModal');
+        const candidateModalOverlay = document.getElementById('candidateModalOverlay');
+        const editCandidateForm = document.getElementById('editCandidateForm');
+        const cancelCandidateBtn = document.getElementById('cancelCandidateBtn');
+        const editCandidateId = document.getElementById('editCandidateId');
+        const editCandidateName = document.getElementById('editCandidateName');
+        const editCandidateUsername = document.getElementById('editCandidateUsername');
         
         // Header Message elements
         const headerSuccessMessage = document.getElementById('header-success-message');
@@ -1418,8 +1811,43 @@
         const deleteConfirmationMessage = document.getElementById('delete-confirmation-message');
         let voterToDelete = null;
 
-        // Stats elements
-        const statsElements = {
+        // Candidate delete modal elements
+        const candidateDeleteModal = document.getElementById('candidate-delete-modal');
+        const candidateDeleteConfirmationMessage = document.getElementById('candidate-delete-confirmation-message');
+        let candidateToDelete = null;
+
+        // Reset modal elements
+        const resetConfirmModal = document.getElementById('reset-confirm-modal');
+        const confirmResetBtn = document.getElementById('confirm-reset-btn');
+        const cancelResetBtn = document.getElementById('cancel-reset-btn');
+        const resetFormBtn = document.getElementById('reset-form-btn');
+
+        // Election control elements
+        const statusIndicator = document.getElementById('status-indicator');
+        const declareResultBtn = document.getElementById('declare-result-btn');
+        const viewResultsBtn = document.getElementById('view-results-btn');
+
+        // Countdown elements
+        const countdownContainer = document.getElementById('countdown-container');
+        const countdownTitle = document.getElementById('countdown-title');
+        const countdownDisplay = document.getElementById('countdown-display');
+        const countdownStatus = document.getElementById('countdown-status');
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        // Election status state
+        let currentElectionStatus = 'inactive'; // inactive, active, completed
+        let isElectionTimeEnded = false;
+        let hasElectionSettings = false;
+        let electionEndTime = null;
+        let countdownInterval = null;
+        let resultsAreDeclared = false;
+        let electionStartTime = null; // ADD THIS LINE
+
+        // Stats elements - Voter Stats
+        const voterStatsElements = {
             totalVoters: {
                 card: document.getElementById('total-voters-card'),
                 value: document.getElementById('total-voters-value'),
@@ -1443,11 +1871,374 @@
             }
         };
 
+        // Stats elements - Candidate Stats
+        const candidateStatsElements = {
+            totalCandidates: {
+                card: document.getElementById('total-candidates-card'),
+                value: document.getElementById('total-candidates-value'),
+                updated: document.getElementById('total-candidates-updated'),
+                error: document.getElementById('total-candidates-error'),
+                endpoint: '/admin/candidates/stats/total'
+            },
+            completedProfiles: {
+                card: document.getElementById('completed-profiles-card'),
+                value: document.getElementById('completed-profiles-value'),
+                updated: document.getElementById('completed-profiles-updated'),
+                error: document.getElementById('completed-profiles-error'),
+                endpoint: '/admin/candidates/stats/completed'
+            },
+            incompleteProfiles: {
+                card: document.getElementById('incomplete-profiles-card'),
+                value: document.getElementById('incomplete-profiles-value'),
+                updated: document.getElementById('incomplete-profiles-updated'),
+                error: document.getElementById('incomplete-profiles-error'),
+                endpoint: '/admin/candidates/stats/incomplete'
+            }
+        };
+
         // Auto-refresh interval (30 seconds)
         let refreshInterval;
         const REFRESH_INTERVAL = 30000; // 30 seconds
 
+        // Countdown Timer Functions
+        // Enhanced Countdown Timer Functions (REPLACE EXISTING COUNTDOWN FUNCTIONS)
+        function startCountdown() {
+            if (!electionStartTime && !electionEndTime) return;
+
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Initial call
+            countdownContainer.style.display = 'block';
+        }
+
+        function stopCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            countdownContainer.style.display = 'none';
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            
+            // Before election starts
+            if (electionStartTime && now < electionStartTime) {
+                const timeLeft = electionStartTime - now;
+                updateCountdownDisplay(timeLeft, 'starts');
+                return;
+            }
+            
+            // During election (between start and end)
+            if (electionEndTime && now < electionEndTime) {
+                const timeLeft = electionEndTime - now;
+                updateCountdownDisplay(timeLeft, 'active');
+                return;
+            }
+            
+            // After election ends
+            isElectionTimeEnded = true;
+            showElectionEnded();
+            updateElectionStatusDisplay();
+            checkResultsStatus(); // Check if results can be declared
+        }
+
+        function updateCountdownDisplay(timeLeft, phase) {
+            if (timeLeft <= 0) {
+                if (phase === 'starts') {
+                    // Election just started, switch to active phase
+                    electionStartTime = null; // Clear start time
+                    updateCountdown(); // Recursively call to handle active phase
+                }
+                return;
+            }
+
+            // Calculate time units
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Update display
+            daysElement.textContent = String(days).padStart(2, '0');
+            hoursElement.textContent = String(hours).padStart(2, '0');
+            minutesElement.textContent = String(minutes).padStart(2, '0');
+            secondsElement.textContent = String(seconds).padStart(2, '0');
+
+            // Update title and status based on phase
+            if (phase === 'starts') {
+                countdownContainer.classList.remove('countdown-ended', 'countdown-active');
+                countdownTitle.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                    Election Starts In
+                `;
+                if (days > 0) {
+                    countdownStatus.textContent = `Election starts in ${days} days, ${hours} hours`;
+                } else if (hours > 0) {
+                    countdownStatus.textContent = `Election starts in ${hours} hours, ${minutes} minutes`;
+                } else if (minutes > 0) {
+                    countdownStatus.textContent = `Election starts in ${minutes} minutes`;
+                } else {
+                    countdownStatus.textContent = `Election starts in ${seconds} seconds`;
+                }
+            } else if (phase === 'active') {
+                countdownContainer.classList.remove('countdown-ended');
+                countdownContainer.classList.add('countdown-active');
+                countdownTitle.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                    Election Time Remaining
+                    <span style="background: #e74c3c; color: white; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; margin-left: 1rem;">LIVE</span>
+                `;
+                if (days > 0) {
+                    countdownStatus.textContent = `Election ends in ${days} days, ${hours} hours`;
+                } else if (hours > 0) {
+                    countdownStatus.textContent = `Election ends in ${hours} hours, ${minutes} minutes`;
+                } else if (minutes > 0) {
+                    countdownStatus.textContent = `Election ends in ${minutes} minutes`;
+                } else {
+                    countdownStatus.textContent = `Election ends in ${seconds} seconds`;
+                }
+            }
+        }
+
+        function showElectionEnded() {
+            countdownContainer.classList.add('countdown-ended');
+            countdownContainer.classList.remove('countdown-active');
+            countdownTitle.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+                Election Ended
+                <span style="background: #95a5a6; color: white; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; margin-left: 1rem;">ENDED</span>
+            `;
+            countdownStatus.textContent = 'Election period has ended. Results can now be declared.';
+            
+            // Set all countdown numbers to 00
+            daysElement.textContent = '00';
+            hoursElement.textContent = '00';
+            minutesElement.textContent = '00';
+            secondsElement.textContent = '00';
+            
+            // Stop the countdown
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+        }
+
+        function initializeCountdown() {
+            const startDate = document.getElementById('start-date').value;
+            const startTime = document.getElementById('start-time').value;
+            const endDate = document.getElementById('end-date').value;
+            const endTime = document.getElementById('end-time').value;
+            
+            if (startDate && startTime && endDate && endTime && currentElectionStatus === 'active') {
+                electionStartTime = new Date(`${startDate}T${startTime}`).getTime();
+                electionEndTime = new Date(`${endDate}T${endTime}`).getTime();
+                
+                const now = new Date().getTime();
+                isElectionTimeEnded = now > electionEndTime;
+                
+                if (isElectionTimeEnded) {
+                    showElectionEnded();
+                    checkResultsStatus(); // Check if results can be declared
+                } else {
+                    // Reset countdown appearance
+                    countdownContainer.classList.remove('countdown-ended');
+                    startCountdown();
+                }
+            } else {
+                stopCountdown();
+            }
+        }
+
         // Header message functions
+
+        // Result Management Functions
+        async function checkResultsStatus() {
+            try {
+                const response = await fetch(`${apiBase}/isResult/declared`);
+                if (!response.ok) {
+                    throw new Error('Failed to check results status');
+                }
+                
+                const data = await response.json();
+                const resultsDeclared = data.resultsDeclared || false;
+                
+                updateResultButtons(resultsDeclared);
+                
+                if (resultsDeclared) {
+                    currentElectionStatus = 'completed';
+                    resultsAreDeclared = true;
+                    updateElectionStatusDisplay();
+                }
+                
+                return resultsDeclared;
+                
+            } catch (error) {
+                console.error('Error checking results status:', error);
+                // On error, assume results not declared and disable buttons
+                updateResultButtons(false);
+                return false;
+            }
+        }
+
+        function updateResultButtons(resultsDeclared) {
+            if (resultsDeclared) {
+                // Results are declared - permanently disable declare button, enable view results
+                declareResultBtn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                    </svg>
+                    Results Declared
+                `;
+                declareResultBtn.disabled = true;
+                declareResultBtn.classList.add('permanently-disabled');
+                declareResultBtn.style.background = '#27ae60';
+                declareResultBtn.style.cursor = 'default';
+
+                // Enable View Results button permanently
+                viewResultsBtn.disabled = false;
+                viewResultsBtn.classList.add('permanently-enabled');
+                viewResultsBtn.style.background = 'linear-gradient(90deg, #8e44ad 0%, #9b59b6 100%)';
+                viewResultsBtn.style.cursor = 'pointer';
+                
+            } else if (isElectionTimeEnded) {
+                // Election ended but results not declared - enable declare button
+                declareResultBtn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.5 0 2.91.37 4.15 1.02"/>
+                    </svg>
+                    Declare Results
+                `;
+                declareResultBtn.disabled = false;
+                declareResultBtn.classList.remove('permanently-disabled');
+                declareResultBtn.style.background = 'linear-gradient(90deg, #f39c12 0%, #e67e22 100%)';
+                declareResultBtn.style.cursor = 'pointer';
+
+                // Keep View Results disabled until results are declared
+                viewResultsBtn.disabled = true;
+                viewResultsBtn.classList.remove('permanently-enabled');
+                viewResultsBtn.style.background = '#bdc3c7';
+                viewResultsBtn.style.cursor = 'not-allowed';
+                
+            } else {
+                // Election still active or not started - disable both buttons
+                declareResultBtn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.5 0 2.91.37 4.15 1.02"/>
+                    </svg>
+                    Declare Results
+                `;
+                declareResultBtn.disabled = true;
+                declareResultBtn.classList.remove('permanently-disabled');
+                declareResultBtn.style.background = '#bdc3c7';
+                declareResultBtn.style.cursor = 'not-allowed';
+
+                viewResultsBtn.disabled = true;
+                viewResultsBtn.classList.remove('permanently-enabled');
+                viewResultsBtn.style.background = '#bdc3c7';
+                viewResultsBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // Enhanced Declare Result Function
+        async function declareResults() {
+            if (!isElectionTimeEnded) {
+                showErrorMessage('Results can only be declared after the election period has ended.');
+                return;
+            }
+
+            if (currentElectionStatus !== 'active') {
+                showErrorMessage('Results can only be declared for an active election.');
+                return;
+            }
+
+            // Check current status first
+            const currentStatus = await checkResultsStatus();
+            if (currentStatus) {
+                showWarningMessage('Results have already been declared.');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to declare the election results? This action will make the results public and cannot be undone.')) {
+                return;
+            }
+
+            const originalText = declareResultBtn.innerHTML;
+            declareResultBtn.disabled = true;
+            declareResultBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Declaring Results...
+            `;
+
+            try {
+                const response = await fetch(`${apiBase}/admin/declare-results`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to declare results');
+                }
+
+                const data = await response.json();
+                
+                // Verify results were declared by checking API again
+                const finalStatus = await checkResultsStatus();
+                
+                if (finalStatus) {
+                    currentElectionStatus = 'completed';
+                    resultsAreDeclared = true;
+                    updateElectionStatusDisplay();
+                    showSuccessMessage(data?.message || 'Election results have been declared successfully!');
+                } else {
+                    throw new Error('Results declaration may not have completed properly');
+                }
+                
+            } catch (error) {
+                console.error('Error declaring results:', error);
+                showErrorMessage('Failed to declare results. Please try again.');
+                
+                // Restore button state on error
+                declareResultBtn.disabled = false;
+                declareResultBtn.innerHTML = originalText;
+                
+                // Double-check status in case it partially succeeded
+                checkResultsStatus();
+            }
+        }
+
+        // Enhanced View Results Function
+        async function viewResults() {
+            // Check current results status
+            const resultsDeclared = await checkResultsStatus();
+            
+            if (!resultsDeclared && !viewResultsBtn.classList.contains('permanently-enabled')) {
+                showErrorMessage('Results have not been declared yet.');
+                return;
+            }
+            
+            // Redirect to results page
+            window.location.href = 'result.html';
+        }
+
         function hideAllHeaderMessages() {
             headerSuccessMessage.style.display = 'none';
             headerErrorMessage.style.display = 'none';
@@ -1512,196 +2303,73 @@
             showHeaderMessage('info', message);
         }
 
-        // Common message for voters who have already voted
-        const VOTER_LOCKED_MESSAGE = 'This voter has already cast their vote. For election integrity, their information cannot be edited or deleted.';
-
-        // Enhanced error message handler for delete operations
-        function getDeleteErrorMessage(error, statusCode, voterInfo = null) {
-            // Check for specific error conditions based on status code and response
-            if (statusCode === 500) {
-                if (error.message && error.message.toLowerCase().includes('vote')) {
-                    return voterInfo && voterInfo.hasVoted 
-                        ? `Cannot delete voter "${voterInfo.name}" because they have already cast their vote. Voters who have participated in the election cannot be removed from the system.`
-                        : 'This voter cannot be deleted because they have already participated in the voting process.';
-                }
-                if (error.message && error.message.toLowerCase().includes('constraint')) {
-                    return 'Cannot delete this voter due to data integrity constraints. The voter may be referenced by other system records.';
-                }
-                if (error.message && error.message.toLowerCase().includes('foreign')) {
-                    return 'Cannot delete this voter because they are associated with existing voting records or other system data.';
-                }
-                return 'Cannot delete this voter because they have already voted in the election.';
-            }
-            
-            if (statusCode === 403) {
-                return 'You do not have permission to delete this voter. Please contact your system administrator.';
-            }
-            
-            if (statusCode === 404) {
-                return 'Voter not found. They may have already been deleted or the voter ID is invalid.';
-            }
-            
-            if (statusCode === 409) {
-                return 'Cannot delete voter due to a conflict. The voter may be currently engaged in an active voting session.';
-            }
-
-            if (statusCode >= 500) {
-                return 'Server error occurred while trying to delete the voter. Please try again later or contact support.';
-            }
-
-            if (statusCode >= 400) {
-                return 'Invalid request. Please refresh the page and try again.';
-            }
-
-            // Fallback for network or other errors
-            if (error.message && error.message.toLowerCase().includes('network')) {
-                return 'Network connection error. Please check your internet connection and try again.';
-            }
-
-            return error.message || 'An unexpected error occurred while deleting the voter. Please try again.';
-        }
-
-        // Stats Management Functions
-        function formatTime(date) {
-            return date.toLocaleTimeString('en-US', { 
-                hour12: false, 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-        }
-
-        function formatNumber(num) {
-            if (num === null || num === undefined) return 'N/A';
-            return new Intl.NumberFormat('en-US').format(num);
-        }
-
-        function showLoadingState(statKey) {
-            const stat = statsElements[statKey];
-            if (!stat) return;
-            
-            stat.card.classList.add('loading');
-            stat.value.textContent = 'Loading...';
-            stat.error.style.display = 'none';
-        }
-
-        function hideLoadingState(statKey) {
-            const stat = statsElements[statKey];
-            if (!stat) return;
-            
-            stat.card.classList.remove('loading');
-        }
-
-        function updateStatValue(statKey, value, isError = false) {
-            const stat = statsElements[statKey];
-            if (!stat) return;
-
-            hideLoadingState(statKey);
-
-            if (isError) {
-                stat.value.textContent = 'Error';
-                stat.value.style.color = '#e74c3c';
-                stat.error.textContent = value;
-                stat.error.style.display = 'block';
-                stat.updated.textContent = '';
-            } else {
-                stat.value.textContent = formatNumber(value);
-                stat.value.style.color = '#3498db';
-                stat.error.style.display = 'none';
-                stat.updated.textContent = formatTime(new Date());
-            }
-        }
-
-    
-
-    async function fetchStat(statKey) {
-        const stat = statsElements[statKey];
-        if (!stat) return;
-
-            showLoadingState(statKey);
-
-            try {
-            const response = await fetch(`${apiBase}${stat.endpoint}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            console.log(`Response for ${statKey}:`, data); // Debug log
-            
-            // Handle different response formats - FIXED VERSION
-            let value;
-            if (typeof data === 'number') {
-                // Direct number response
-                value = data;
-            } else if (data && typeof data.totalVoters === 'number') {
-                // Response from /total-voters endpoint
-                value = data.totalVoters;
-            } else if (data && typeof data.votedSuccessfully === 'number') {
-                // Response from /voted-successfully endpoint  
-                value = data.votedSuccessfully;
-            } else if (data && typeof data.haventVoted === 'number') {
-                // Response from /havent-voted endpoint
-                value = data.haventVoted;
-            } else if (data && typeof data.count === 'number') {
-                // Generic count property (fallback)
-                value = data.count;
-            } else if (data && typeof data.total === 'number') {
-                // Generic total property (fallback)
-                value = data.total;
-            } else if (data && typeof data.value === 'number') {
-                // Generic value property (fallback)
-                value = data.value;
-            } else {
-                console.error('Unrecognized response format:', data);
-                throw new Error('Invalid response format - expected numeric value');
-            }
-
-        updateStatValue(statKey, value);
+        // Updated Election status functions
+        // Updated Election status functions
+        function updateElectionStatusDisplay() {
+            if (currentElectionStatus === 'completed') {
+                // Results have been declared
+                statusIndicator.className = 'btn-status completed';
+                statusIndicator.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    Results Declared
+                `;
                 
-            } catch (error) {
-                console.error(`Error fetching ${statKey}:`, error);
-                updateStatValue(statKey, error.message, true);
+                updateResultButtons(true);
+                
+            } else if (currentElectionStatus === 'active') {
+                // Election is active
+                statusIndicator.className = 'btn-status active';
+                statusIndicator.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    Election Active
+                `;
+                
+                // Initialize countdown
+                initializeCountdown();
+                
+                // Check results status to update buttons appropriately
+                checkResultsStatus();
+                
+            } else {
+                // Election is inactive
+                statusIndicator.className = 'btn-status inactive';
+                statusIndicator.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                    Election Inactive
+                `;
+                
+                // Stop countdown
+                stopCountdown();
+                
+                // Disable both buttons
+                updateResultButtons(false);
             }
         }
 
-        function loadAllStats() {
-            console.log('Loading all stats...');
-            Object.keys(statsElements).forEach(statKey => {
-                fetchStat(statKey);
-            });
+        function isElectionActive() {
+            return currentElectionStatus === 'active';
         }
 
-        function startAutoRefresh() {
-            // Clear any existing interval
-            if (refreshInterval) {
-                clearInterval(refreshInterval);
-            }
-            
-            // Set up new interval
-            refreshInterval = setInterval(() => {
-                console.log('Auto-refreshing stats...');
-                loadAllStats();
-            }, REFRESH_INTERVAL);
-            
-            console.log(`Auto-refresh started (${REFRESH_INTERVAL / 1000}s interval)`);
-        }
+        // Updated message constants
+        const ELECTION_ACTIVE_MESSAGE = 'Editing is not allowed while the election is active.';
 
-        function stopAutoRefresh() {
-            if (refreshInterval) {
-                clearInterval(refreshInterval);
-                refreshInterval = null;
-                console.log('Auto-refresh stopped');
-            }
-        }
-
-        // Delete Modal Functions
+        // Voter Delete Modal Functions
         function showDeleteConfirmation(voterId, voterName, hasVoted) {
+            if (isElectionActive()) {
+                showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                return;
+            }
+            
             voterToDelete = { id: voterId, name: voterName, hasVoted: hasVoted };
             deleteConfirmationMessage.innerHTML = `
                 Are you sure you want to delete voter <strong>"${voterName}"</strong>?<br><br>
@@ -1755,20 +2423,464 @@
                 cancelDelete();
                 showSuccessMessage(data?.message || `Voter "${name}" has been successfully deleted.`);
                 loadVoters();
-                loadAllStats();
+                loadVoterStats();
             })
             .catch(error => {
                 cancelDelete();
                 console.error('Error deleting voter:', error);
-                showErrorMessage(getDeleteErrorMessage(error, error.status, voterToDelete));
+                showErrorMessage(getDeleteErrorMessage(error, error.status, voterToDelete, 'voter'));
                 loadVoters();
-                loadAllStats();
+                loadVoterStats();
             })
             .finally(() => {
                 confirmBtn.disabled = false;
                 confirmBtn.innerHTML = originalText;
                 voterToDelete = null;
             });
+        }
+
+        // Candidate Delete Modal Functions
+        function showCandidateDeleteConfirmation(candidateId, candidateName, voteCount) {
+            if (isElectionActive()) {
+                showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                return;
+            }
+            
+            candidateToDelete = { id: candidateId, name: candidateName, voteCount: voteCount };
+            candidateDeleteConfirmationMessage.innerHTML = `
+                Are you sure you want to delete candidate <strong>"${candidateName}"</strong>?<br><br>
+                This action is permanent and cannot be reversed.
+            `;
+            candidateDeleteModal.classList.add('active');
+        }
+
+        function cancelCandidateDelete() {
+            candidateDeleteModal.classList.remove('active');
+            candidateToDelete = null;
+        }
+
+        function executeCandidateDelete() {
+            if (!candidateToDelete) {
+                cancelCandidateDelete();
+                return;
+            }
+
+            const { id, name, voteCount } = candidateToDelete;
+
+            const confirmBtn = document.getElementById('confirm-candidate-delete-btn');
+            const originalText = confirmBtn.innerHTML;
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Deleting...
+            `;
+
+            fetch(`${apiBase}/admin/candidates/${id}`, { 
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(async res => {
+                let responseData = null;
+                try { responseData = await res.json(); } catch {}
+                if (!res.ok) {
+                    const error = {
+                        status: res.status,
+                        statusText: res.statusText,
+                        message: responseData?.message || responseData?.error || `HTTP ${res.status}: ${res.statusText}`,
+                        data: responseData
+                    };
+                    throw error;
+                }
+                return responseData;
+            })
+            .then(data => {
+                cancelCandidateDelete();
+                showSuccessMessage(data?.message || `Candidate "${name}" has been successfully deleted.`);
+                loadCandidates();
+                loadCandidateStats();
+            })
+            .catch(error => {
+                cancelCandidateDelete();
+                console.error('Error deleting candidate:', error);
+                showErrorMessage(getDeleteErrorMessage(error, error.status, candidateToDelete, 'candidate'));
+                loadCandidates();
+                loadCandidateStats();
+            })
+            .finally(() => {
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = originalText;
+                candidateToDelete = null;
+            });
+        }
+
+        // Enhanced error message handler for delete operations
+        function getDeleteErrorMessage(error, statusCode, itemInfo = null, itemType = 'voter') {
+            if (statusCode === 500) {
+                if (error.message && error.message.toLowerCase().includes('vote')) {
+                    return itemInfo && (itemInfo.hasVoted || itemInfo.voteCount > 0) 
+                        ? `Cannot delete ${itemType} "${itemInfo.name}" because they have already ${itemType === 'voter' ? 'cast their vote' : 'received votes'}. ${itemType === 'voter' ? 'Voters' : 'Candidates'} who have participated in the election cannot be removed from the system.`
+                        : `This ${itemType} cannot be deleted because they have already participated in the voting process.`;
+                }
+                if (error.message && error.message.toLowerCase().includes('constraint')) {
+                    return `Cannot delete this ${itemType} due to data integrity constraints. The ${itemType} may be referenced by other system records.`;
+                }
+                if (error.message && error.message.toLowerCase().includes('foreign')) {
+                    return `Cannot delete this ${itemType} because they are associated with existing voting records or other system data.`;
+                }
+                return `Cannot delete this ${itemType} because they have already participated in the election.`;
+            }
+            
+            if (statusCode === 403) {
+                return `You do not have permission to delete this ${itemType}. Please contact your system administrator.`;
+            }
+            
+            if (statusCode === 404) {
+                return `${itemType.charAt(0).toUpperCase() + itemType.slice(1)} not found. They may have already been deleted or the ${itemType} ID is invalid.`;
+            }
+            
+            if (statusCode === 409) {
+                return `Cannot delete ${itemType} due to a conflict. The ${itemType} may be currently engaged in an active voting session.`;
+            }
+
+            if (statusCode >= 500) {
+                return `Server error occurred while trying to delete the ${itemType}. Please try again later or contact support.`;
+            }
+
+            if (statusCode >= 400) {
+                return `Invalid request. Please refresh the page and try again.`;
+            }
+
+            if (error.message && error.message.toLowerCase().includes('network')) {
+                return `Network connection error. Please check your internet connection and try again.`;
+            }
+
+            return error.message || `An unexpected error occurred while deleting the ${itemType}. Please try again.`;
+        }
+
+        // Stats Management Functions
+        function formatTime(date) {
+            return date.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+
+        function formatNumber(num) {
+            if (num === null || num === undefined) return 'N/A';
+            return new Intl.NumberFormat('en-US').format(num);
+        }
+
+        function showLoadingState(statKey, statsElements) {
+            const stat = statsElements[statKey];
+            if (!stat) return;
+            
+            stat.card.classList.add('loading');
+            stat.value.textContent = 'Loading...';
+            stat.error.style.display = 'none';
+        }
+
+        function hideLoadingState(statKey, statsElements) {
+            const stat = statsElements[statKey];
+            if (!stat) return;
+            
+            stat.card.classList.remove('loading');
+        }
+
+        function updateStatValue(statKey, value, statsElements, isError = false) {
+            const stat = statsElements[statKey];
+            if (!stat) return;
+
+            hideLoadingState(statKey, statsElements);
+
+            if (isError) {
+                stat.value.textContent = 'Error';
+                stat.value.style.color = '#e74c3c';
+                stat.error.textContent = value;
+                stat.error.style.display = 'block';
+                stat.updated.textContent = '';
+            } else {
+                stat.value.textContent = formatNumber(value);
+                stat.value.style.color = '#3498db';
+                stat.error.style.display = 'none';
+                stat.updated.textContent = formatTime(new Date());
+            }
+        }
+
+        async function fetchStat(statKey, statsElements) {
+            const stat = statsElements[statKey];
+            if (!stat) return;
+
+            showLoadingState(statKey, statsElements);
+
+            try {
+                const response = await fetch(`${apiBase}${stat.endpoint}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log(`Response for ${statKey}:`, data);
+                
+                // Handle different response formats
+                let value;
+                if (typeof data === 'number') {
+                    value = data;
+                } else if (data && typeof data.totalVoters === 'number') {
+                    value = data.totalVoters;
+                } else if (data && typeof data.votedSuccessfully === 'number') {
+                    value = data.votedSuccessfully;
+                } else if (data && typeof data.haventVoted === 'number') {
+                    value = data.haventVoted;
+                } else if (data && typeof data.totalCandidates === 'number') {
+                    value = data.totalCandidates;
+                } else if (data && typeof data.completedProfiles === 'number') {
+                    value = data.completedProfiles;
+                } else if (data && typeof data.incompleteProfiles === 'number') {
+                    value = data.incompleteProfiles;
+                } else if (data && typeof data.count === 'number') {
+                    value = data.count;
+                } else if (data && typeof data.total === 'number') {
+                    value = data.total;
+                } else if (data && typeof data.value === 'number') {
+                    value = data.value;
+                } else {
+                    console.error('Unrecognized response format:', data);
+                    throw new Error('Invalid response format - expected numeric value');
+                }
+
+                updateStatValue(statKey, value, statsElements);
+                    
+            } catch (error) {
+                console.error(`Error fetching ${statKey}:`, error);
+                updateStatValue(statKey, error.message, statsElements, true);
+            }
+        }
+
+        function loadVoterStats() {
+            console.log('Loading voter stats...');
+            Object.keys(voterStatsElements).forEach(statKey => {
+                fetchStat(statKey, voterStatsElements);
+            });
+        }
+
+        function loadCandidateStats() {
+            console.log('Loading candidate stats...');
+            Object.keys(candidateStatsElements).forEach(statKey => {
+                fetchStat(statKey, candidateStatsElements);
+            });
+        }
+
+        function startAutoRefresh(type = 'voters') {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+            
+            refreshInterval = setInterval(() => {
+                console.log(`Auto-refreshing ${type} stats...`);
+                if (type === 'voters') {
+                    loadVoterStats();
+                } else if (type === 'candidates') {
+                    loadCandidateStats();
+                }
+            }, REFRESH_INTERVAL);
+            
+            console.log(`Auto-refresh started for ${type} (${REFRESH_INTERVAL / 1000}s interval)`);
+        }
+
+        function stopAutoRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+                console.log('Auto-refresh stopped');
+            }
+        }
+
+        // Reset Election Settings Functions
+        function showResetConfirmation() {
+            resetConfirmModal.classList.add('active');
+        }
+
+        function cancelReset() {
+            resetConfirmModal.classList.remove('active');
+        }
+
+        function executeReset() {
+            const confirmBtn = confirmResetBtn;
+            const originalText = confirmBtn.innerHTML;
+            
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Resetting...
+            `;
+
+            fetch(`${apiBase}/admin/election-settings/reset`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(async res => {
+                let responseData = null;
+                try { 
+                    responseData = await res.json(); 
+                } catch {}
+                
+                if (!res.ok) {
+                    const error = {
+                        status: res.status,
+                        statusText: res.statusText,
+                        message: responseData?.message || responseData?.error || `HTTP ${res.status}: ${res.statusText}`,
+                        data: responseData
+                    };
+                    throw error;
+                }
+                return responseData;
+            })
+            .then(data => {
+                cancelReset();
+                showSuccessMessage(data?.message || 'Election settings have been reset successfully. All configuration data has been cleared.');
+                
+                setDefaultElectionValues();
+                currentElectionStatus = 'inactive';
+                hasElectionSettings = false;
+                resultsAreDeclared = false;
+                
+                // Reset button states - remove permanent classes
+                declareResultBtn.classList.remove('permanently-disabled');
+                viewResultsBtn.classList.remove('permanently-enabled');
+                
+                stopCountdown();
+                updateElectionStatusDisplay();
+            })
+            .catch(error => {
+                cancelReset();
+                console.error('Error resetting election settings:', error);
+                
+                let errorMessage = 'Failed to reset election settings. Please try again.';
+                if (error.status === 404) {
+                    errorMessage = 'Reset endpoint not available. The form has been reset locally.';
+                    setDefaultElectionValues();
+                    currentElectionStatus = 'inactive';
+                    hasElectionSettings = false;
+                    resultsAreDeclared = false;
+                    
+                    // Reset button states - remove permanent classes
+                    declareResultBtn.classList.remove('permanently-disabled');
+                    viewResultsBtn.classList.remove('permanently-enabled');
+                    
+                    stopCountdown();
+                    updateElectionStatusDisplay();
+                    showWarningMessage(errorMessage);
+                    return;
+                } else if (error.status >= 500) {
+                    errorMessage = 'Server error occurred while resetting settings. Please try again later.';
+                } else if (error.message) {
+                    errorMessage = `Reset failed: ${error.message}`;
+                }
+                
+                showErrorMessage(errorMessage);
+            })
+            .finally(() => {
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = originalText;
+            });
+        }
+
+        // Declare(Enhanced) Result Function
+        async function declareResults() {
+            if (!isElectionTimeEnded) {
+                showErrorMessage('Results can only be declared after the election period has ended.');
+                return;
+            }
+
+            if (currentElectionStatus !== 'active') {
+                showErrorMessage('Results can only be declared for an active election.');
+                return;
+            }
+
+            // Check current status first
+            const currentStatus = await checkResultsStatus();
+            if (currentStatus) {
+                showWarningMessage('Results have already been declared.');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to declare the election results? This action will make the results public and cannot be undone.')) {
+                return;
+            }
+
+            const originalText = declareResultBtn.innerHTML;
+            declareResultBtn.disabled = true;
+            declareResultBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Declaring Results...
+            `;
+
+            try {
+                const response = await fetch(`${apiBase}/admin/declare-results`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to declare results');
+                }
+
+                const data = await response.json();
+                
+                // Verify results were declared by checking API again
+                const finalStatus = await checkResultsStatus();
+                
+                if (finalStatus) {
+                    currentElectionStatus = 'completed';
+                    resultsAreDeclared = true;
+                    updateElectionStatusDisplay();
+                    showSuccessMessage(data?.message || 'Election results have been declared successfully!');
+                } else {
+                    throw new Error('Results declaration may not have completed properly');
+                }
+                
+            } catch (error) {
+                console.error('Error declaring results:', error);
+                showErrorMessage('Failed to declare results. Please try again.');
+                
+                // Restore button state on error
+                declareResultBtn.disabled = false;
+                declareResultBtn.innerHTML = originalText;
+                
+                // Double-check status in case it partially succeeded
+                checkResultsStatus();
+            }
+        }
+
+        // View Results Function
+        async function viewResults() {
+            // Check current results status
+            const resultsDeclared = await checkResultsStatus();
+            
+            if (!resultsDeclared && !viewResultsBtn.classList.contains('permanently-enabled')) {
+                showErrorMessage('Results have not been declared yet.');
+                return;
+            }
+            
+            // Redirect to results page
+            window.location.href = 'result.html';
         }
 
         // Logout functions
@@ -1781,10 +2893,8 @@
         }
 
         function confirmLogout() {
-            // Add a smooth transition effect before redirect
             document.getElementById('logout-modal').classList.remove('active');
             
-            // Show a brief loading state or message
             const loadingOverlay = document.createElement('div');
             loadingOverlay.style.cssText = `
                 position: fixed;
@@ -1820,7 +2930,6 @@
             
             document.body.appendChild(loadingOverlay);
             
-            // Redirect after a short delay for better UX
             setTimeout(() => {
                 window.location.href = 'login.html';
             }, 1500);
@@ -1834,23 +2943,29 @@
             // Tab switching functionality
             navTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
-                    // Remove active class from all tabs and sections
                     navTabs.forEach(t => t.classList.remove('active'));
                     contentSections.forEach(s => s.classList.remove('active'));
                     
-                    // Add active class to clicked tab
                     this.classList.add('active');
                     
-                    // Show corresponding section
                     const sectionId = this.getAttribute('data-section');
                     const targetSection = document.getElementById(sectionId);
                     if (targetSection) {
                         targetSection.classList.add('active');
                     }
 
-                    // Start/stop auto-refresh based on active section
+                    // Load data and start/stop auto-refresh based on active section
                     if (sectionId === 'voters') {
-                        startAutoRefresh();
+                        loadVoters();
+                        loadVoterStats();
+                        startAutoRefresh('voters');
+                    } else if (sectionId === 'candidates') {
+                        loadCandidates();
+                        loadCandidateStats();
+                        startAutoRefresh('candidates');
+                    } else if (sectionId === 'election') {
+                        loadElectionSettings();
+                        stopAutoRefresh();
                     } else {
                         stopAutoRefresh();
                     }
@@ -1871,7 +2986,7 @@
                         endDate: document.getElementById('end-date').value,
                         startTime: document.getElementById('start-time').value,
                         endTime: document.getElementById('end-time').value,
-                        status: "active"
+                        status: 'active' // Automatically set to active when election is configured
                     };
 
                     // Validate
@@ -1880,8 +2995,17 @@
                         return;
                     }
 
+                    // Validate date/time logic
+                    const startDateTime = new Date(`${formData.startDate}T${formData.startTime || '00:00'}`);
+                    const endDateTime = new Date(`${formData.endDate}T${formData.endTime || '23:59'}`);
+                    
+                    if (startDateTime >= endDateTime) {
+                        showErrorMessage('End date and time must be after start date and time.');
+                        return;
+                    }
+
                     try {
-                        const response = await fetch('http://localhost:8080/api/admin/election-settings', {
+                        const response = await fetch(`${apiBase}/admin/election-settings`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -1893,25 +3017,53 @@
                             throw new Error('Failed to save settings');
                         }
 
-                        showSuccessMessage('Election settings saved successfully!');
+                        const result = await response.json();
+                        
+                        // Update local status
+                        currentElectionStatus = 'active';
+                        hasElectionSettings = true;
+                        resultsAreDeclared = false;
+                        
+                        // Initialize countdown
+                        electionEndTime = new Date(`${formData.endDate}T${formData.endTime}`).getTime();
+                        const now = new Date().getTime();
+                        isElectionTimeEnded = now > electionEndTime;
+                        
+                        updateElectionStatusDisplay();
+                        
+                        showSuccessMessage('Election settings saved successfully! Election is now active.');
+                        
                     } catch (error) {
                         console.error('Error:', error);
                         showErrorMessage('Failed to save election settings. Please try again.');
                     }
                 });
-
             }
 
-            // Reset form functionality
-            const resetBtn = document.querySelector('.btn-secondary');
-            if (resetBtn) {
-                resetBtn.addEventListener('click', function() {
-                    if (confirm('Are you sure you want to reset all form fields?')) {
-                        electionForm.reset();
-                        // Reset to default values
-                        setDefaultElectionValues();
-                    }
+            // Declare result button event listener
+            if (declareResultBtn) {
+                declareResultBtn.addEventListener('click', declareResults);
+            }
+
+            // View results button event listener
+            if (viewResultsBtn) {
+                viewResultsBtn.addEventListener('click', viewResults);
+            }
+
+            // Reset form button functionality
+            if (resetFormBtn) {
+                resetFormBtn.addEventListener('click', function() {
+                    showResetConfirmation();
                 });
+            }
+
+            // Reset modal event listeners
+            if (confirmResetBtn) {
+                confirmResetBtn.addEventListener('click', executeReset);
+            }
+
+            if (cancelResetBtn) {
+                cancelResetBtn.addEventListener('click', cancelReset);
             }
 
             // Form validation
@@ -1928,6 +3080,19 @@
                     showWarningMessage('End date and time must be after start date and time');
                     return false;
                 }
+                
+                // Update election completion status when dates change
+                const now = new Date();
+                electionEndTime = endDate.getTime();
+                isElectionTimeEnded = now.getTime() > electionEndTime;
+                
+                // Reinitialize countdown if election is active
+                if (currentElectionStatus === 'active') {
+                    initializeCountdown();
+                }
+                
+                updateElectionStatusDisplay();
+                
                 return true;
             }
 
@@ -1964,24 +3129,37 @@
                 loadVoters();
             }
 
-            // Load stats initially and start auto-refresh
-            loadAllStats();
-            startAutoRefresh();
+            // Load voter stats initially and start auto-refresh
+            loadVoterStats();
+            startAutoRefresh('voters');
 
-            // Set default election values
-            setDefaultElectionValues();
+            // Load election settings and check status
+            loadElectionSettings();
 
             // Handle page visibility changes
             document.addEventListener('visibilitychange', function() {
                 if (document.hidden) {
                     stopAutoRefresh();
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                    }
                 } else {
                     // Reload stats when page becomes visible again
-                    loadAllStats();
-                    // Only start auto-refresh if voters section is active
-                    const votersSection = document.getElementById('voters');
-                    if (votersSection && votersSection.classList.contains('active')) {
-                        startAutoRefresh();
+                    const activeSection = document.querySelector('.content-section.active');
+                    if (activeSection) {
+                        const sectionId = activeSection.id;
+                        if (sectionId === 'voters') {
+                            loadVoterStats();
+                            startAutoRefresh('voters');
+                        } else if (sectionId === 'candidates') {
+                            loadCandidateStats();
+                            startAutoRefresh('candidates');
+                        }
+                    }
+                    // Refresh election status and restart countdown if needed
+                    checkElectionStatus();
+                    if (currentElectionStatus === 'active' && !isElectionTimeEnded) {
+                        initializeCountdown();
                     }
                 }
             });
@@ -1995,17 +3173,76 @@
             const nextWeek = new Date(today);
             nextWeek.setDate(nextWeek.getDate() + 7);
 
-            document.getElementById('election-name').value = 'General Elections 2024';
+            document.getElementById('election-name').value = '';
             document.getElementById('election-type').value = 'general';
-            document.getElementById('start-date').value = tomorrow.toISOString().split('T')[0];
-            document.getElementById('end-date').value = nextWeek.toISOString().split('T')[0];
+            document.getElementById('start-date').value = '';
+            document.getElementById('end-date').value = '';
             document.getElementById('start-time').value = '08:00';
             document.getElementById('end-time').value = '18:00';
 
-            // Update status display
-            const statusElement = document.getElementById('election-status');
-            statusElement.className = 'election-status status-inactive';
-            statusElement.textContent = 'Not Configured';
+            // Reset status
+            currentElectionStatus = 'inactive';
+            hasElectionSettings = false;
+            resultsAreDeclared = false;
+            electionEndTime = null;
+            isElectionTimeEnded = false;
+            stopCountdown();
+            updateElectionStatusDisplay();
+        }
+
+        // Election status check function
+        // Election status check function
+        async function checkElectionStatus() {
+            try {
+                const response = await fetch(`${apiBase}/election-settings`);
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Check if we have election settings
+                    if (data && data.name) {
+                        hasElectionSettings = true;
+                        
+                        // Set election start and end times
+                        if (data.startDate && data.startTime) {
+                            electionStartTime = new Date(`${data.startDate}T${data.startTime}`).getTime();
+                        }
+                        if (data.endDate && data.endTime) {
+                            electionEndTime = new Date(`${data.endDate}T${data.endTime}`).getTime();
+                            const now = new Date().getTime();
+                            isElectionTimeEnded = now > electionEndTime;
+                        }
+                        
+                        // Check results status first
+                        const resultsStatus = await checkResultsStatus();
+                        
+                        // Update status based on results and time
+                        if (resultsStatus) {
+                            currentElectionStatus = 'completed';
+                            resultsAreDeclared = true;
+                        } else if (data.status === 'active' && hasElectionSettings) {
+                            currentElectionStatus = 'active';
+                            resultsAreDeclared = false;
+                        } else {
+                            currentElectionStatus = 'inactive';
+                            resultsAreDeclared = false;
+                        }
+                    } else {
+                        hasElectionSettings = false;
+                        currentElectionStatus = 'inactive';
+                        resultsAreDeclared = false;
+                    }
+                    
+                    updateElectionStatusDisplay();
+                    return currentElectionStatus;
+                }
+            } catch (error) {
+                console.error('Error checking election status:', error);
+                hasElectionSettings = false;
+                currentElectionStatus = 'inactive';
+                resultsAreDeclared = false;
+                updateElectionStatusDisplay();
+            }
+            return 'inactive';
         }
 
         // Voter Management Functions
@@ -2027,14 +3264,14 @@
                             <td>${voter.username}</td>
                             <td>${voter.hasVoted ? 'Yes' : 'No'}</td>
                             <td>
-                                <button class="edit-btn" data-id="${voter.id}">Edit</button>
-                                <button class="delete-btn" data-id="${voter.id}" data-name="${voter.name}" data-voted="${voter.hasVoted}">Delete</button>
+                                <button class="edit-btn" data-id="${voter.id}" ${isElectionActive() ? 'disabled title="Cannot edit during active election"' : ''}>Edit</button>
+                                <button class="delete-btn" data-id="${voter.id}" data-name="${voter.name}" data-voted="${voter.hasVoted}" ${isElectionActive() ? 'disabled title="Cannot delete during active election"' : ''}>Delete</button>
                             </td>
                         `;
                         voterTableBody.appendChild(tr);
                     });
                    
-                    attachListeners();
+                    attachVoterListeners();
                 })
                 .catch(err => {
                     console.error('Error loading voters:', err);
@@ -2042,13 +3279,58 @@
                 });
         }
 
-        function attachListeners() {
+        // Candidate Management Functions
+        function loadCandidates() {
+            fetch(`${apiBase}/admin/candidates`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    candidateTableBody.innerHTML = '';
+                    data.forEach(candidate => {
+                        const tr = document.createElement('tr');
+                        
+                        const isCompleted = candidate.status === "Completed";
+                        const statusClass = isCompleted ? 'status-active' : 'status-inactive';
+                        const statusText = isCompleted ? 'Complete' : 'Incomplete';
+                        
+                        tr.innerHTML = `
+                            <td>${candidate.id}</td>
+                            <td>${candidate.name || 'N/A'}</td>
+                            <td>${candidate.username || 'N/A'}</td>
+                            <td>${candidate.partyName || 'N/A'}</td>
+                            <td>${candidate.symbol || 'N/A'}</td>
+                            <td>
+                                <span class="election-status ${statusClass}">
+                                    ${statusText}
+                                </span>
+                            </td>
+                            <td>${candidate.voteCount || 0}</td>
+                            <td>
+                                <button class="candidate-edit-btn" data-id="${candidate.id}" ${isElectionActive() ? 'disabled title="Cannot edit during active election"' : ''}>Edit</button>
+                                <button class="candidate-delete-btn" data-id="${candidate.id}" data-name="${candidate.name || 'N/A'}" data-votes="${candidate.voteCount || 0}" ${isElectionActive() ? 'disabled title="Cannot delete during active election"' : ''}>Delete</button>
+                            </td>
+                        `;
+                        candidateTableBody.appendChild(tr);
+                    });
+                    
+                    attachCandidateListeners();
+                })
+                .catch(err => {
+                    console.error('Error loading candidates:', err);
+                    showErrorMessage('Failed to load candidates: ' + err.message);
+                });
+        }
+
+        function attachVoterListeners() {
             document.querySelectorAll('.edit-btn').forEach(btn =>
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const hasVoted = btn.closest('tr').querySelector('td:nth-child(4)').textContent.trim() === 'Yes';
-                    if (hasVoted) {
-                        showErrorMessage(VOTER_LOCKED_MESSAGE);
+                    if (isElectionActive()) {
+                        showErrorMessage(ELECTION_ACTIVE_MESSAGE);
                         return;
                     }
                     openEditModal(btn.getAttribute('data-id'));
@@ -2057,19 +3339,50 @@
             document.querySelectorAll('.delete-btn').forEach(btn =>
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    if (isElectionActive()) {
+                        showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                        return;
+                    }
                     const id = btn.getAttribute('data-id');
                     const name = btn.getAttribute('data-name');
                     const hasVoted = btn.getAttribute('data-voted') === 'true';
-                    if (hasVoted) {
-                        showErrorMessage(VOTER_LOCKED_MESSAGE);
-                        return;
-                    }
                     showDeleteConfirmation(id, name, hasVoted);
                 })
             );
         }
 
+        function attachCandidateListeners() {
+            document.querySelectorAll('.candidate-edit-btn').forEach(btn =>
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (isElectionActive()) {
+                        showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                        return;
+                    }
+                    openCandidateEditModal(btn.getAttribute('data-id'));
+                })
+            );
+            document.querySelectorAll('.candidate-delete-btn').forEach(btn =>
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (isElectionActive()) {
+                        showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                        return;
+                    }
+                    const id = btn.getAttribute('data-id');
+                    const name = btn.getAttribute('data-name');
+                    const voteCount = parseInt(btn.getAttribute('data-votes') || '0');
+                    showCandidateDeleteConfirmation(id, name, voteCount);
+                })
+            );
+        }
+
         function openEditModal(id) {
+            if (isElectionActive()) {
+                showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                return;
+            }
+            
             fetch(`${apiBase}/admin/voters/${id}`)
                 .then(res => {
                     if (!res.ok) {
@@ -2089,6 +3402,31 @@
                 });
         }
 
+        function openCandidateEditModal(id) {
+            if (isElectionActive()) {
+                showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                return;
+            }
+            
+            fetch(`${apiBase}/admin/candidates/${id}`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(candidate => {
+                    editCandidateId.value = id;
+                    editCandidateName.value = candidate.name || '';
+                    editCandidateUsername.value = candidate.username || '';
+                    showCandidateModal();
+                })
+                .catch(err => {
+                    console.error('Error fetching candidate:', err);
+                    showErrorMessage('Failed to fetch candidate data: ' + err.message);
+                });
+        }
+
         function showModal() {
             editModal.style.display = 'block';
             modalOverlay.style.display = 'block';
@@ -2099,41 +3437,63 @@
             modalOverlay.style.display = 'none';
         }
 
+        function showCandidateModal() {
+            editCandidateModal.style.display = 'block';
+            candidateModalOverlay.style.display = 'block';
+        }
+
+        function hideCandidateModal() {
+            editCandidateModal.style.display = 'none';
+            candidateModalOverlay.style.display = 'none';
+        }
+
         if (cancelBtn) cancelBtn.onclick = hideModal;
         if (modalOverlay) modalOverlay.onclick = hideModal;
+        if (cancelCandidateBtn) cancelCandidateBtn.onclick = hideCandidateModal;
+        if (candidateModalOverlay) candidateModalOverlay.onclick = hideCandidateModal;
 
+        // Modal setup
         const editConfirmModal = document.getElementById('edit-confirm-modal');
         const editConfirmationMessage = document.getElementById('edit-confirmation-message');
         const confirmEditBtn = document.getElementById('confirm-edit-btn');
         const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-        let pendingEditData = null;
+        const candidateEditConfirmModal = document.getElementById('candidate-edit-confirm-modal');
+        const candidateEditConfirmationMessage = document.getElementById('candidate-edit-confirmation-message');
+        const confirmCandidateEditBtn = document.getElementById('confirm-candidate-edit-btn');
+        const cancelCandidateEditBtn = document.getElementById('cancel-candidate-edit-btn');
 
+        let pendingEditData = null;
+        let pendingCandidateEditData = null;
+
+        // Voter Edit Form Handler
         if (editForm) {
             editForm.addEventListener('submit', e => {
                 e.preventDefault();
 
-                // Prepare data for confirmation
+                if (isElectionActive()) {
+                    showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                    hideModal();
+                    return;
+                }
+
                 const id = editVoterId.value;
                 const updated = {
                     fullName: editFullName.value.trim(),
                     username: editUsername.value.trim()
                 };
 
-                // Basic validation
                 if (!updated.fullName || !updated.username) {
                     showErrorMessage('Please fill in all required fields.');
                     return;
                 }
 
-                // Email validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(updated.username)) {
                     showErrorMessage('Please enter a valid email address for username.');
                     return;
                 }
 
-                // Show confirmation modal
                 pendingEditData = { id, updated };
                 editConfirmationMessage.innerHTML = `
                     Are you sure you want to update voter details?<br>
@@ -2144,6 +3504,45 @@
             });
         }
 
+        // Candidate Edit Form Handler
+        if (editCandidateForm) {
+            editCandidateForm.addEventListener('submit', e => {
+                e.preventDefault();
+
+                if (isElectionActive()) {
+                    showErrorMessage(ELECTION_ACTIVE_MESSAGE);
+                    hideCandidateModal();
+                    return;
+                }
+
+                const id = editCandidateId.value;
+                const updated = {
+                    fullName: editCandidateName.value.trim(),
+                    username: editCandidateUsername.value.trim()
+                };
+
+                if (!updated.fullName || !updated.username) {
+                    showErrorMessage('Please fill in all required fields.');
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(updated.username)) {
+                    showErrorMessage('Please enter a valid email address for username.');
+                    return;
+                }
+
+                pendingCandidateEditData = { id, updated };
+                candidateEditConfirmationMessage.innerHTML = `
+                    Are you sure you want to update candidate details?<br>
+                    <strong>Full Name:</strong> ${updated.fullName}<br>
+                    <strong>Username (Email):</strong> ${updated.username}
+                `;
+                candidateEditConfirmModal.classList.add('active');
+            });
+        }
+
+        // Edit Confirmation Handlers
         if (confirmEditBtn) {
             confirmEditBtn.onclick = function() {
                 editConfirmModal.classList.remove('active');
@@ -2151,7 +3550,6 @@
 
                 const { id, updated } = pendingEditData;
 
-                // Show loading state
                 confirmEditBtn.disabled = true;
                 const originalText = confirmEditBtn.textContent;
                 confirmEditBtn.textContent = 'Saving...';
@@ -2171,7 +3569,7 @@
                     showSuccessMessage('Voter updated successfully!');
                     hideModal();
                     loadVoters();
-                    loadAllStats();
+                    loadVoterStats();
                 })
                 .catch(err => {
                     console.error('Error updating voter:', err);
@@ -2185,6 +3583,46 @@
             };
         }
 
+        if (confirmCandidateEditBtn) {
+            confirmCandidateEditBtn.onclick = function() {
+                candidateEditConfirmModal.classList.remove('active');
+                if (!pendingCandidateEditData) return;
+
+                const { id, updated } = pendingCandidateEditData;
+
+                confirmCandidateEditBtn.disabled = true;
+                const originalText = confirmCandidateEditBtn.textContent;
+                confirmCandidateEditBtn.textContent = 'Saving...';
+
+                fetch(`${apiBase}/admin/candidates/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updated)
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(response => {
+                    showSuccessMessage('Candidate updated successfully!');
+                    hideCandidateModal();
+                    loadCandidates();
+                    loadCandidateStats();
+                })
+                .catch(err => {
+                    console.error('Error updating candidate:', err);
+                    showErrorMessage('Failed to update candidate: ' + err.message);
+                })
+                .finally(() => {
+                    pendingCandidateEditData = null;
+                    confirmCandidateEditBtn.disabled = false;
+                    confirmCandidateEditBtn.textContent = originalText;
+                });
+            };
+        }
+
         if (cancelEditBtn) {
             cancelEditBtn.onclick = function() {
                 editConfirmModal.classList.remove('active');
@@ -2192,37 +3630,64 @@
             };
         }
 
-        // --- Election Settings Integration (Fixed for 404 errors) ---
+        if (cancelCandidateEditBtn) {
+            cancelCandidateEditBtn.onclick = function() {
+                candidateEditConfirmModal.classList.remove('active');
+                pendingCandidateEditData = null;
+            };
+        }
+
+        // Election Settings Integration
         const apiElectionSettings = `${apiBase}/election-settings`;
 
-        // Helper: Fill form fields from backend data
         function fillElectionForm(data) {
             if (!data) return;
             
-            document.getElementById('election-name').value = data.name || 'General Elections 2024';
+            document.getElementById('election-name').value = data.name || '';
             document.getElementById('election-type').value = data.type || 'general';
             document.getElementById('start-date').value = data.startDate || '';
             document.getElementById('end-date').value = data.endDate || '';
             document.getElementById('start-time').value = data.startTime || '08:00';
             document.getElementById('end-time').value = data.endTime || '18:00';
 
-            // Update status display
-            const statusElement = document.getElementById('election-status');
-            if (data.status && data.status === 'active') {
-                statusElement.className = 'election-status status-active';
-                statusElement.textContent = 'Active Election';
+            // Update status and check if we have settings
+            if (data.name) {
+                hasElectionSettings = true;
+                
+                // Check if results have been declared
+                if (data.status === 'completed' || data.resultsPublished) {
+                    currentElectionStatus = 'completed';
+                    resultsAreDeclared = true;
+                } else if (data.status === 'active') {
+                    currentElectionStatus = 'active';
+                    resultsAreDeclared = false;
+                } else {
+                    currentElectionStatus = 'active'; // Default to active if election is configured
+                    resultsAreDeclared = false;
+                }
             } else {
-                statusElement.className = 'election-status status-inactive';
-                statusElement.textContent = 'Inactive Election';
+                hasElectionSettings = false;
+                currentElectionStatus = 'inactive';
+                resultsAreDeclared = false;
             }
+            
+            // Check if election time has ended and set election end time
+            const now = new Date();
+            const endDate = data.endDate;
+            const endTime = data.endTime;
+            
+            if (endDate && endTime) {
+                electionEndTime = new Date(`${endDate}T${endTime}`).getTime();
+                isElectionTimeEnded = now.getTime() > electionEndTime;
+            }
+            
+            updateElectionStatusDisplay();
         }
 
-        // Fetch current settings on load - WITH IMPROVED ERROR HANDLING
         function loadElectionSettings() {
             fetch(apiElectionSettings)
                 .then(res => {
                     if (res.status === 404) {
-                        // 404 is expected if endpoint doesn't exist yet
                         console.log('Election settings endpoint not found - using defaults');
                         setDefaultElectionValues();
                         return null;
@@ -2239,7 +3704,6 @@
                 })
                 .catch(err => {
                     console.error('Error loading election settings:', err);
-                    // Only show error if it's not a 404
                     if (!err.message.includes('404')) {
                         showWarningMessage('Could not load election settings from server. Using default values.');
                     }
@@ -2247,50 +3711,15 @@
                 });
         }
 
-        // Save settings on form submit - WITH IMPROVED ERROR HANDLING
-        function saveElectionSettings(formData) {
-            fetch(apiElectionSettings, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(res => {
-                if (res.status === 404) {
-                    // If PUT endpoint doesn't exist, try POST
-                    return fetch(apiElectionSettings, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-                }
-                return res;
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Failed to save election settings: HTTP ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                showSuccessMessage('Election settings have been saved successfully!');
-                fillElectionForm(data || formData);
-            })
-            .catch(err => {
-                console.error('Error saving election settings:', err);
-                if (err.message.includes('404')) {
-                    showWarningMessage('Election settings endpoint not available. Settings saved locally only.');
-                    // Still update the UI with the form data
-                    fillElectionForm(formData);
-                } else {
-                    showErrorMessage('Could not save election settings: ' + err.message);
-                }
-            });
+        function initializeCandidateSection() {
+            loadCandidates();
+            loadCandidateStats();
         }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load election settings with graceful 404 handling
-            loadElectionSettings();
+        // Cleanup when page unloads
+        window.addEventListener('beforeunload', function() {
+            stopAutoRefresh();
+            stopCountdown();
         });
     </script>
 </body>
